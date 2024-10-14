@@ -1,0 +1,10 @@
+FROM python:3.9-slim
+RUN apt-get update && apt-get install -y iputils-ping
+ENV DB_HOST=host.docker.internal
+ENV DB_NAME=microservice
+ENV DB_USER=postgres
+ENV DB_PASSWORD=bikeshop
+WORKDIR /app
+COPY . /app
+RUN pip3 install --no-cache-dir -r requirements.txt
+CMD ["python3", "/ecomm/kafka_consumer.py"]

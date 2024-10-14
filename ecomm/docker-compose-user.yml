@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  postgres_user:
+    image: postgres
+    environment:
+      POSTGRES_DB: bikeshop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bikeshop
+    ports:
+      - "5433:5432"
+    networks:
+      - my_network
+
+  user_app:
+    build:
+      context: ./ecomm
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./ecomm:/app
+    ports:
+      - "8001:8001"
+    depends_on:
+      - postgres_user
+      - kafka
+    networks:
+      - my_network

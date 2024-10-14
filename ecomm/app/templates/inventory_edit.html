@@ -1,0 +1,71 @@
+{% extends 'start_file.html' %}
+{% block title %}Inventory{% endblock %}
+{%block content%}
+
+
+
+<div class="container">
+    <div class="row">
+        {% for product, image_base64 in items %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="photo">
+                        <a href="/api/product/{{ product.id }}" class="into-detail">
+                            <img src="data:image/jpeg;base64,{{ image_base64 }}" alt="{{ product.name }}" class="card-img-top">
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="name">
+                            <a href="/api/inventory/{{ product.id }}" class="into-detail">{{ product.name }}</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="price-delivery">
+                                    <div class="price-info">
+                                        <span class="final-price">
+                                            <span class="int-part">{{ product.price }}</span>
+                                            <span class="dec-part">&nbsp;zł</span>
+                                        </span>
+                                        <div class="discount">
+                                            <span class="percent">-11%</span>
+                                            <span class="lowest-price-info">Najniższa cena:</span>
+                                            <span class="old">1 899 zł</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="delivery installments">
+                                    <div class="border border-success rounded p-2" style="background-color: white;">
+                                        <span class="delivery-label text-success">Dostawa GRATIS</span>
+                                    </div>
+                                    <div class="border border-dark p-2 rounded mt-2" style="background-color: white;">
+                                        <span class="installments-label text-primary mr-2">Raty <span>10 x 0%</span></span>
+                                    </div>
+                                    <div class="calendar-comparer">
+                                        <div class="delivery-statement tooltip-inline tooltipstered" data-target="off">
+                                            <input class="delivery-end-time" type="hidden" value="1710428400000">
+                                            <span class="icon icon-stopwatch"></span>
+                                            <span class="text">U Ciebie już jutro!</span>
+                                        </div>
+                                    </div>
+                                    <form action="{% url 'delete_inventory' product.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

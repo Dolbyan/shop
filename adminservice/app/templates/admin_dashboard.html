@@ -1,0 +1,319 @@
+<!-- admin_dashboard.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administracyjny</title>
+    <!-- Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Style CSS -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Lewe linki nawigacyjne -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <!-- Możesz dodać dodatkowe linki tutaj -->
+        </ul>
+
+        <!-- Prawe linki nawigacyjne -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Elementy menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" role="button">
+                    <i class="fas fa-user"></i> Hello, {{ user.first_name }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" role="button">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Logo marki -->
+        <a href="{% url 'admin_dashboard' %}" class="brand-link">
+            <img src="" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Panel Admina</span>
+        </a>
+
+        <!-- Pasek boczny -->
+        <div class="sidebar">
+            <!-- Panel użytkownika -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="" class="img-circle elevation-2" alt="Avatar użytkownika">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+                </div>
+            </div>
+
+            <!-- Formularz wyszukiwania w pasku bocznym -->
+            <div class="form-inline">
+                <div class="input-group" data-widget="sidebar-search">
+                    <input class="form-control form-control-sidebar" type="search" placeholder="Szukaj" aria-label="Szukaj">
+                    <div class="input-group-append">
+                        <button class="btn btn-sidebar">
+                            <i class="fas fa-search fa-fw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu w pasku bocznym -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    <!-- Dodaj elementy menu tutaj -->
+                    <li class="nav-item">
+                        <a href="{% url 'admin_dashboard' %}" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'orders' %}" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>Zamówienia</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'admin_inventory' %}" class="nav-link">
+                            <i class="nav-icon fas fa-boxes"></i>
+                            <p>Produkty</p>
+                        </a>
+                    </li>
+                    <!-- Możesz dodać więcej elementów menu według potrzeb -->
+                </ul>
+            </nav>
+            <!-- /.menu w pasku bocznym -->
+        </div>
+        <!-- /.pasek boczny -->
+    </aside>
+    <!-- /.main-sidebar -->
+
+    <!-- Content Wrapper. Zawiera treść strony -->
+    <div class="content-wrapper">
+        <!-- Nagłówek strony -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <h1 class="m-0">Panel Administracyjny</h1>
+            </div>
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Główna zawartość -->
+        <div class="content">
+            <div class="container-fluid">
+                <!-- Boxy ze statystykami -->
+                <div class="row">
+                    <!-- Łączna Sprzedaż -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>${{ total_sales|floatformat:2 }}</h3>
+                                <p>Łączna Sprzedaż</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Łączna Liczba Zamówień -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ total_orders }}</h3>
+                                <p>Łączna Liczba Zamówień</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Łączna Liczba Klientów -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ total_customers }}</h3>
+                                <p>Łączna Liczba Klientów</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Łączna Liczba Produktów -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ total_products }}</h3>
+                                <p>Łączna Liczba Produktów</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-boxes"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- Wykres sprzedaży -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Karta wykresu sprzedaży -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Sprzedaż w Ostatnich 7 Dniach</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="sales-chart" style="height: 250px;"></canvas>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- Ostatnie zamówienia -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Karta ostatnich zamówień -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Ostatnie Zamówienia</h3>
+                                <div class="card-tools">
+                                    <a href="{% url 'orders' %}" class="btn btn-tool btn-sm">
+                                        <i class="fas fa-list"></i> Wszystkie Zamówienia
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Klient</th>
+                                            <th>Kwota</th>
+                                            <th>Status</th>
+                                            <th>Data Zakupu</th>
+                                            <th>Akcje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in recent_orders %}
+                                        <tr>
+                                            <td>{{ order.id }}</td>
+                                            <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                                            <td>${{ order.total_amount }}</td>
+                                            <td>
+                                                {% if order.payment_status %}
+                                                    <span class="badge bg-success">Opłacone</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning">Oczekujące</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+                                            <td>
+                                                <a href="{% url 'order_detail' order.id %}" class="text-muted">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Stopka -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-inline">
+            Wersja 1.0
+        </div>
+        <strong>&copy; 2024 <a href="#">Twoja Firma</a>.</strong> Wszelkie prawa zastrzeżone.
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- Skrypty JavaScript -->
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap 5 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- AdminLTE App -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Kod JavaScript do wykresu -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('sales-chart').getContext('2d');
+        var salesData = {
+            labels: {{ sales_chart_labels|safe }},
+            datasets: [{
+                label: 'Sprzedaż',
+                data: {{ sales_chart_data|safe }},
+                backgroundColor: 'rgba(60,141,188,0.9)',
+                borderColor: 'rgba(60,141,188,0.8)',
+                fill: false,
+                tension: 0.1,
+            }]
+        };
+        var salesChart = new Chart(ctx, {
+            type: 'line',
+            data: salesData,
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

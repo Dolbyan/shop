@@ -1,0 +1,32 @@
+{% extends 'start_file.html' %}
+{% block title %}Cart{% endblock %}
+{%block content%}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4 class="mb-3">Billing address</h4>
+            <form action="{% url 'order' %}"  method="post" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="first_name">First name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        <div class="invalid-feedback">Valid first name is required.</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="last_name">Last name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        <div class="invalid-feedback">Valid last name is required.</div>
+                    </div>
+                </div>
+                <!-- Other form fields go here -->
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'start_file.html' %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+  <body>
+    <h1>Your orders</h1>
+    <ul>
+        {% for order in user_orders %}
+        <li>
+            <p>Data zamówienia: {{ order.created_at }}</p>
+            <p>Amount: {{ order.quantity }}</p>
+            <p>Price: {{ order.total_amount|floatformat:"2" }}</p>
+            <p>Payment status: {% if order.payment_status %} Paid {% else %} Unpaid {% endif %}</p>
+            <p>Produkty:</p>
+            <ul>
+                {% for item in order.items.all %}
+                <li>{{ item.name }} - {{ item.price }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+  </body>
+
+{% endblock %}

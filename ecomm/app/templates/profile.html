@@ -1,0 +1,39 @@
+{% extends 'start_file.html' %}
+{% block title %}Inventory{% endblock %}
+{%block content%}
+
+<body>
+    <h1>User Profile</h1>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <h2>User Profile Details</h2>
+    {% if edit_mode %}
+
+    <form action="{% url 'update_profile' %}" method="post">
+        {% csrf_token %}
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="{{ profile.user.first_name }}"><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="{{ profile.user.last_name }}"><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="{{ profile.address }}"><br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="{{ profile.phone }}"><br>
+
+        <button type="submit">Update Profile</button>
+        <a href="{% url 'profile' %}">Cancel</a>
+    </form>
+    {% else %}
+
+    <p><strong>First Name:</strong> {{ profile.user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ profile.user.last_name }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+    <a href="?edit=1">Edit</a>
+    {% endif %}
+</body>
+
+{% endblock %}

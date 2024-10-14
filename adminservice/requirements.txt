@@ -1,0 +1,8 @@
+Django>=3.0,<4.0
+djangorestframework
+psycopg2-binary
+confluent-kafka
+boto3
+djangorestframework-simplejwt
+django-cors-headers
+django-storages

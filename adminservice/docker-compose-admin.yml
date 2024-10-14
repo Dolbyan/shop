@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  postgres_admin:
+    image: postgres
+    environment:
+      POSTGRES_DB: admin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bikeshop
+    ports:
+      - "5434:5432"
+    networks:
+      - my_network
+
+  admin_app:
+    build:
+      context: ./adminservice
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./adminservice:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres_admin
+      - kafka
+    networks:
+      - my_network
+
