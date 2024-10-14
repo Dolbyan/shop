@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: user-app
-        image: user-app-image  # Upewnij się, że masz odpowiedni obraz Dockera
+        image: dolbyan/Python/ecomm:latest
         ports:
-        - containerPort: 8000
+        - containerPort: 8001
         env:
         - name: DJANGO_SETTINGS_MODULE
-          value: "ecomm.settings"
+          value: "ecomm.ecomm.settings"
         - name: KAFKA_BROKER_URL
           value: "kafka:9092"
 ---
@@ -29,6 +29,7 @@ metadata:
   name: user-service
 spec:
   ports:
-    - port: 8000
+    - port: 8001
   selector:
     app: user-app
+  type: LoadBalancer

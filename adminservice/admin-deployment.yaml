@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: admin-app
-        image: admin-app-image  # Upewnij się, że masz odpowiedni obraz Dockera
+        image: dolbyan/Python/adminservice:latest
         ports:
-        - containerPort: 8001
+        - containerPort: 8000
         env:
         - name: DJANGO_SETTINGS_MODULE
-          value: "adminservice.settings"
+          value: "adminservice.eshop.settings"
         - name: KAFKA_BROKER_URL
           value: "kafka:9092"
 ---
@@ -29,6 +29,7 @@ metadata:
   name: admin-service
 spec:
   ports:
-    - port: 8001
+    - port: 8000
   selector:
     app: admin-app
+  type: LoadBalancer

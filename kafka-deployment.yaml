@@ -1,3 +1,4 @@
+# Zookeeper Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,6 +9,7 @@ spec:
   selector:
     app: zookeeper
 ---
+# Zookeeper Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,6 +35,7 @@ spec:
         - name: ZOOKEEPER_TICK_TIME
           value: "2000"
 ---
+#Kafka Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -43,6 +46,7 @@ spec:
   selector:
     app: kafka
 ---
+# Kafka Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
