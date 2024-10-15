@@ -24,7 +24,7 @@ jobs:
 
     - name: Log in to Google Container Registry
       run: |
-#        echo "${{ secrets.GCP_CREDENTIALS }}" | gcloud auth activate-service-account --key-file=-
+        echo "${{ secrets.GCP_CREDENTIALS }}" | gcloud auth activate-service-account --key-file=-
         gcloud auth configure-docker
 
     - name: Build and push Docker image for admin-app
