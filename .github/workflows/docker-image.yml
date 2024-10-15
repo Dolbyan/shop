@@ -71,11 +71,11 @@ jobs:
 
     - name: Apply Kubernetes manifests for admin-app
       run: |
-        kubectl apply -f admin-deployment.yaml
+        kubectl apply -f adminservice/admin-deployment.yaml
 
     - name: Apply Kubernetes manifests for user-app
       run: |
-        kubectl apply -f user-deployment.yaml
+        kubectl apply -f ecomm/user-deployment.yaml
 
     - name: Apply Kubernetes manifests for kafka-consumer
       run: |
