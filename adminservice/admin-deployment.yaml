@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: admin-app
-        image: dolbyan/Python/adminservice:latest
+        image: gcr.io/app-integration-435314/admin-app-image:latest
         ports:
         - containerPort: 8000
         env:

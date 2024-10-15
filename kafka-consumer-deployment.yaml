@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: kafka-consumer
-        image: dolbyan/Python:latest
+        image: gcr.io/app-integration-435314/kafka-consumer-image:latest
         command: ["python", "kafka_consumer.py"]
         env:
         - name: KAFKA_BROKER_URL

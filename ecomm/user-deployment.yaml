@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: user-app
-        image: dolbyan/Python/ecomm:latest
+        image: gcr.io/app-integration-435314/user-app-image:latest
         ports:
         - containerPort: 8001
         env:
