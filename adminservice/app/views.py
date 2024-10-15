@@ -255,15 +255,15 @@ class AdminInventoryView(APIView):
         item.save()
         kafka_service = KafkaService()
         kafka_service.send_message('inventory_updates', 'update', 'Items', {
-            'id': item_id,
-            'name': item.name,
-            'category': item.type,
-            'description': item.description,
-            'price': item.price,
-            'amount': item.amount,
-            'image_url': item.image,
-            'image_name': item.image_name,
-            'source': 'admin'
+            "id": item_id,
+            "name": item.name,
+            "category": item.type,
+            "description": item.description,
+            "price": item.price,
+            "amount": item.amount,
+            "image_url": item.image,
+            "image_name": item.image_name,
+            "source": "admin"
         })
 
         return redirect('admin_inventory')
