@@ -266,7 +266,7 @@ class AdminInventoryView(APIView):
             "source": "admin"
         })
 
-        return redirect('admin_inventory')
+        return redirect("admin_inventory")
 
     def delete_item(self, request):
         item_id = request.POST.get("item_id")
