@@ -254,7 +254,7 @@ class AdminInventoryView(APIView):
                 item.image_name = image_name
         item.save()
         kafka_service = KafkaService()
-        kafka_service.send_message('inventory_updates', 'update', 'Items', {
+        kafka_service.send_message("inventory_updates", "update", "Items", {
             "id": item_id,
             "name": item.name,
             "category": item.type,
