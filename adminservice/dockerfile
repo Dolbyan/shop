@@ -1,7 +1,11 @@
 FROM python:3.9-slim
 WORKDIR /app
-COPY ./adminservice /app
-COPY ./adminservice/requirements.txt .
+
+# Skopiowanie całego katalogu adminservice do /app
+COPY adminservice /app
+
+# Skopiowanie pliku requirements.txt do bieżącego katalogu
+COPY adminservice/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY . .
