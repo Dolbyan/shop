@@ -219,11 +219,11 @@ class AdminInventoryView(APIView):
         item_id = request.POST.get("item_id")
         print(f"Received item_id: {item_id}")
         if not item_id:
-            return Response({"detail":"Brak item_id w żądaniu"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Brak item_id w żądaniu"}, status=status.HTTP_400_BAD_REQUEST)
         try:
             item_id = int(item_id)
         except ValueError:
-            return Response({"detail":"Nieprawidłowy item_id"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Nieprawidłowy item_id"}, status=status.HTTP_400_BAD_REQUEST)
         item = get_object_or_404(Items, pk=item_id)
 
         name = request.POST.get("name")
@@ -273,7 +273,7 @@ class AdminInventoryView(APIView):
         item = get_object_or_404(Items, pk=item_id)
         item.delete()
         kafka_service = KafkaService()
-        kafka_service.send_message('inventory_updates', 'delete', 'Items', {
+        kafka_service.send_message("inventory_updates", 'delete', 'Items', {
             'id': item_id,
             'source':'admin'
         })
