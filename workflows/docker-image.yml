@@ -1,0 +1,77 @@
+name: Docker Image CI/CD
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Google Cloud CLI
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Log in to Google Container Registry
+      run: |
+        echo "${{ secrets.GCP_CREDENTIALS }}" | gcloud auth activate-service-account --key-file=-
+        gcloud auth configure-docker
+
+    - name: Build and push Docker image for admin-app
+      run: |
+        docker build ./adminservice -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+
+    - name: Build and push Docker image for user-app
+      run: |
+        docker build ./ecomm -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
+
+    - name: Build and push Docker image for kafka-consumer
+      run: |
+        docker build . -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Google Cloud CLI
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Configure kubectl
+      run: |
+        gcloud container clusters get-credentials app-cluster --zone europe-west1-b --project app-integration-435314
+
+    - name: Apply Kubernetes manifests for admin-app
+      run: |
+        kubectl apply -f admin-deployment.yaml
+
+    - name: Apply Kubernetes manifests for user-app
+      run: |
+        kubectl apply -f user-deployment.yaml
+
+    - name: Apply Kubernetes manifests for kafka-consumer
+      run: |
+        kubectl apply -f kafka-consumer-deployment.yaml
+
+    - name: Apply Kafka and Zookeeper manifests
+      run: |
+        kubectl apply -f kafka-deployment.yaml
