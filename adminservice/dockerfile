@@ -1,12 +1,6 @@
 FROM python:3.9-slim
 WORKDIR /app
-
-# Skopiowanie całego katalogu adminservice do /app
-COPY adminservice /app
-
-# Skopiowanie pliku requirements.txt do bieżącego katalogu
-COPY adminservice/requirements.txt .
-RUN pip install --upgrade pip
+COPY . /app
 RUN pip install -r requirements.txt
 COPY . .
 ENV DJANGO_SETTINGS_MODULE=adminservice.eshop.settings
