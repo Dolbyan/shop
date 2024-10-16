@@ -6,5 +6,5 @@ COPY requirements.txt .
 RUN ls -la /app
 RUN ls -la /app/adminservice
 RUN cat /app/kafka_consumer.py
-ENV PYTHONPATH="${PYTHONPATH}:/app:/app/adminservice"
+ENV PYTHONPATH="/app"
 CMD ["python", "kafka_consumer.py"]
