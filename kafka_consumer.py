@@ -1,6 +1,6 @@
 import os
 import django
-from adminservice.app.utilities import KafkaService
+from app.utilities import KafkaService
 from adminservice.app.models import Items as AdminItems
 from ecomm.app.models import Items as UserItems
 from django.core.exceptions import ObjectDoesNotExist
