@@ -1,11 +1,20 @@
 import os
 import django
+
 os.environ['DJANGO_SETTINGS_MODULE'] = "adminservice.eshop.settings"
 django.setup()
 from adminservice.app.utilities import KafkaService
 from adminservice.app.models import Items as AdminItems
 from ecomm.app.models import Items as UserItems
 from django.core.exceptions import ObjectDoesNotExist
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
+logger.debug("Starting Django setup")
+django.setup()
+logger.debug("Django setup complete")
 
 
 class KafkaConsumerApp:

@@ -7,6 +7,8 @@ COPY ./adminservice /lesson3/adminservice
 COPY ./ecomm /lesson3/ecomm
 COPY kafka_consumer.py /lesson3/
 
+RUN ls -R /app
+RUN ls -R /lesson3
 RUN ls -la /lesson3
 RUN ls -la /lesson3/adminservice
 RUN cat /lesson3/kafka_consumer.py
