@@ -13,9 +13,9 @@ class KafkaConsumerApp:
     def set_django_settings(self, source):
 
         if source == "user":
-            os.environ['DJANGO_SETTINGS_MODULE'] = "adminservice.settings"
+            os.environ['DJANGO_SETTINGS_MODULE'] = "adminservice.eshop.settings"
         elif source == "admin":
-            os.environ['DJANGO_SETTINGS_MODULE'] = "ecomm.settings"
+            os.environ['DJANGO_SETTINGS_MODULE'] = "ecomm.ecomm.settings"
 
         django.setup()
 

@@ -21,4 +21,4 @@ spec:
         - name: KAFKA_BROKER_URL
           value: "kafka:9092"
         - name: DJANGO_SETTINGS_MODULE
-          value: "eshop.settings"
+          value: "adminservice.eshop.settings"
