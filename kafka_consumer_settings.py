@@ -39,7 +39,7 @@ INSTALLED_APPS = [
 
 
 DATABASES = {
-    'default': {
+    'admin_db': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'admin-app',
         'USER': 'postgres',
