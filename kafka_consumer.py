@@ -1,5 +1,7 @@
 import os
 import django
+os.environ['DJANGO_SETTINGS_MODULE'] = "adminservice.eshop.settings"
+django.setup()
 from adminservice.app.utilities import KafkaService
 from adminservice.app.models import Items as AdminItems
 from ecomm.app.models import Items as UserItems
