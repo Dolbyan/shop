@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0004_carts_order'),
+        ('main_app', '0004_carts_order'),
     ]
 
     operations = [
@@ -17,6 +17,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='items',
-            field=models.ManyToManyField(related_name='orders', to='app.items'),
+            field=models.ManyToManyField(related_name='orders', to='main_app.items'),
         ),
     ]

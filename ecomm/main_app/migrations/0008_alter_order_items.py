@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0007_alter_order_user'),
+        ('main_app', '0007_alter_order_user'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='order',
             name='items',
-            field=models.ManyToManyField(related_name='order_item', to='app.items'),
+            field=models.ManyToManyField(related_name='order_item', to='main_app.items'),
         ),
     ]

@@ -36,12 +36,12 @@ jobs:
       run: |
         gcloud auth configure-docker
 
-    - name: Build and push Docker image for admin-app
+    - name: Build and push Docker image for admin-main_app
       run: |
         docker build ./adminservice -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
 
-    - name: Build and push Docker image for user-app
+    - name: Build and push Docker image for user-main_app
       run: |
         docker build ./ecomm -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
@@ -74,11 +74,11 @@ jobs:
       run: |
         gcloud container clusters get-credentials app-cluster --zone europe-west1-b --project app-integration-435314
 
-    - name: Apply Kubernetes manifests for admin-app
+    - name: Apply Kubernetes manifests for admin-main_app
       run: |
         kubectl apply -f adminservice/admin-deployment.yaml
 
-    - name: Apply Kubernetes manifests for user-app
+    - name: Apply Kubernetes manifests for user-main_app
       run: |
         kubectl apply -f ecomm/user-deployment.yaml
 

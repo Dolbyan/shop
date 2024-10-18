@@ -5,8 +5,8 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ecomm.settings")
 django.setup()
 
-from app.utilities import KafkaService
-from app.models import Items
+from main_app.utilities import KafkaService
+from main_app.models import Items
 from django.core.exceptions import ObjectDoesNotExist
 
 

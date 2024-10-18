@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0006_alter_items_image'),
+        ('main_app', '0006_alter_items_image'),
     ]
 
     operations = [

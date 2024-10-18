@@ -134,7 +134,7 @@ DATABASES = {
         'NAME': 'admin-app',
         'USER': 'postgres',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '/cloudsql/app-integration-435314:europe-central2:admin-app',
+        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
         'PORT': '5432',
     }
 }

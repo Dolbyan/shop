@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AdminPage, OrderListView, AdminDashboardView, OrderDetailView, AdminInventoryView, AdminGetItemView, LoginView, LogoutView
+from .views import OrderListView, AdminDashboardView, OrderDetailView, AdminInventoryView, AdminGetItemView, LoginView, LogoutView
 
 urlpatterns = [
     path("login", LoginView.as_view(), name="login"),

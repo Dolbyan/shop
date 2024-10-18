@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'adminservice.app.apps.AdminServiceAppConfig',
-    'ecomm.app.apps.EcommAppConfig',
+    'ecomm.main_app.apps.EcommAppConfig',
     'storages',
 ]
 
@@ -44,7 +44,7 @@ DATABASES = {
         'NAME': 'admin-app',
         'USER': 'postgres',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '/cloudsql/app-integration-435314:europe-central2:admin-app',
+        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
         'PORT': '5432',
     },
     "ecomm_db": {

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-app
+  name: user-main_app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-app
+      app: user-main_app
   template:
     metadata:
       labels:
-        app: user-app
+        app: user-main_app
     spec:
       containers:
-      - name: user-app
-        image: gcr.io/app-integration-435314/user-app-image:latest
+      - name: user-main_app
+        image: gcr.io/app-integration-435314/user-main_app-image:latest
         ports:
         - containerPort: 8001
         env:
@@ -31,5 +31,5 @@ spec:
   ports:
     - port: 8001
   selector:
-    app: user-app
+    app: user-main_app
   type: LoadBalancer
