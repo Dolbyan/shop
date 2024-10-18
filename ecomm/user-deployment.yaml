@@ -6,15 +6,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-main_app
+      app: user-main-app
   template:
     metadata:
       labels:
-        app: user-main_app
+        app: user-main-app
     spec:
       containers:
-      - name: user-main_app
-        image: gcr.io/app-integration-435314/user-main_app-image:latest
+      - name: user-main-app
+        image: gcr.io/app-integration-435314/user-app-image:latest
         ports:
         - containerPort: 8001
         env:
@@ -31,5 +31,5 @@ spec:
   ports:
     - port: 8001
   selector:
-    app: user-main_app
+    app: user-main-app
   type: LoadBalancer
