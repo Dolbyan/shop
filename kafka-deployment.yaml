@@ -43,6 +43,8 @@ metadata:
 spec:
   ports:
     - port: 9092
+      protocol: TCP
+      targetPort: 9092
   selector:
     app: kafka
 ---
@@ -63,7 +65,7 @@ spec:
     spec:
       containers:
       - name: kafka
-        image: confluentinc/cp-kafka:latest
+        image: confluentinc/cp-kafka:7.4.0
         imagePullPolicy: Always
         ports:
         - containerPort: 9092
@@ -76,7 +78,9 @@ spec:
           value: "PLAINTEXT://0.0.0.0:9092"
         - name: KAFKA_ADVERTISED_LISTENERS
           value: "PLAINTEXT://kafka:9092"
-        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
-          value: "1"
         - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
           value: "PLAINTEXT:PLAINTEXT"
+        - name: KAFKA_INTER_BROKER_LISTENER_NAME
+          value: "PLAINTEXT"
+        - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+          value: "1"
