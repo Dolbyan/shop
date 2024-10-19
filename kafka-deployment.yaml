@@ -41,6 +41,7 @@ kind: Service
 metadata:
   name: kafka
 spec:
+  type: ClusterIP
   ports:
     - port: 9092
       protocol: TCP
@@ -88,4 +89,6 @@ spec:
           value: ""
         - name: KAFKA_LOG4J_ROOT_LOGLEVEL
           value: "DEBUG"
+        - name: KAFKA_PORT
+          value: "9092"
 
