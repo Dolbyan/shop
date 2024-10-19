@@ -84,3 +84,8 @@ spec:
           value: "PLAINTEXT"
         - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
           value: "1"
+        - name: KAFKA_CFG_PORT
+          value: ""
+        - name: KAFKA_LOG4J_ROOT_LOGLEVEL
+          value: "DEBUG"
+
