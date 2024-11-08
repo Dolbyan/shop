@@ -45,7 +45,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
-        'PORT': '5432',
+        'PORT': '15432',
     },
     "ecomm_db": {
         'ENGINE': 'django.db.backends.postgresql',
@@ -53,7 +53,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'ke{,I4JEe+tZFM33',
         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
-        'PORT': '5432',
+        'PORT': '15433',
     }
 }
 

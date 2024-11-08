@@ -112,7 +112,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'ke{,I4JEe+tZFM33',
         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
-        'PORT': '5432',
+        'PORT': '15433',
     }
 }
 # 'default': {
