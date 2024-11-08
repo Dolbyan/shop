@@ -106,16 +106,23 @@ WSGI_APPLICATION = 'ecomm.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bikeshop',
+        'NAME': 'page-app',
         'USER': 'postgres',
-        'PASSWORD': 'bikeshop',
-        'HOST': 'postgres_user',
+        'PASSWORD': 'ke{,I4JEe+tZFM33',
+        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
         'PORT': '5432',
     }
 }
-
+# 'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'bikeshop',
+#         'USER': 'postgres',
+#         'PASSWORD': 'bikeshop',
+#         'HOST': 'postgres_user',
+#         'PORT': '5432',
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

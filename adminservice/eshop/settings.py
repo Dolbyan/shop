@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'adminservice.app.apps.AdminServiceAppConfig',
     'storages',
+    'adminservice',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -131,10 +132,10 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app',
+        'NAME': 'page-app',
         'USER': 'postgres',
-        'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
+        'PASSWORD': 'ke{,I4JEe+tZFM33',
+        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
         'PORT': '5432',
     }
 }
