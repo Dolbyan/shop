@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'adminservice.app.apps.AdminServiceAppConfig',
     'storages',
+    'adminservice',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
