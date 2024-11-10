@@ -1,6 +1,7 @@
 FROM python:3.9-slim
 WORKDIR /app
 COPY ./admin_app /app/admin_app/
+COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 ENV PYTHONPATH="/app:${PYTHONPATH}"
 ENV DJANGO_SETTINGS_MODULE=admin_app.eshop.settings
