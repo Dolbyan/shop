@@ -18,6 +18,8 @@ spec:
           ports:
           - containerPort: 8000
           env:
+          - name: PYTHONPATH
+            value: "/app"
           - name: DJANGO_SETTINGS_MODULE
             value: "eshop.settings"
           - name: KAFKA_BROKER_URL
