@@ -38,12 +38,12 @@ jobs:
 
     - name: Build and push Docker image for admin-main_app
       run: |
-        docker build ./adminservice/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest 
+        docker build ./adminservice/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest ./adminservice
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
 
     - name: Build and push Docker image for user-main_app
       run: |
-        docker build ./ecomm/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest 
+        docker build ./ecomm/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest ./ecomm
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
 
     - name: Build and push Docker image for kafka-consumer
