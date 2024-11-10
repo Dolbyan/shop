@@ -38,7 +38,7 @@ jobs:
 
     - name: Build and push Docker image for admin-main_app
       run: |
-        docker buildx build -f ./adminservice/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest .
+        docker buildx build -f ./admin_app/Dockerfile -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest .
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
 
     - name: Build and push Docker image for user-main_app
@@ -84,7 +84,7 @@ jobs:
 
     - name: Apply Kubernetes manifests for admin-main_app
       run: |
-        kubectl apply -f adminservice/admin-deployment.yaml
+        kubectl apply -f admin_app/admin-deployment.yaml
 
     - name: Apply Kubernetes manifests for user-main_app
       run: |

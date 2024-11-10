@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('total_amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('quantity', models.PositiveIntegerField(default=1)),
                 ('payment_status', models.BooleanField(default=False)),
-                ('items', models.ManyToManyField(related_name='order_item', to='adminservice_app.Items')),
+                ('items', models.ManyToManyField(related_name='order_item', to='admin_app.Items')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='orders', to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.PositiveIntegerField(default=1)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='cart_products', to='adminservice_app.items')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='cart_products', to='admin_app.items')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

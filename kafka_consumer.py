@@ -3,8 +3,8 @@ import django
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "kafka_consumer_settings"
 django.setup()
-from adminservice.app.utilities import KafkaService
-from adminservice.app.models import Items as AdminItems
+from admin_app.app.utilities import KafkaService
+from admin_app.app.models import Items as AdminItems
 from ecomm.main_app.models import Items as UserItems
 from django.core.exceptions import ObjectDoesNotExist
 
