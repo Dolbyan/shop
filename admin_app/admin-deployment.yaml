@@ -17,7 +17,7 @@ spec:
           image: gcr.io/app-integration-435314/admin-app-image:latest
           ports:
           - containerPort: 8000
-          command: ["python", "/app/admin_app/manage.p", "runserver", "0.0.0.0:8000"]
+          command: ["python", "/app/admin_app/manage.py", "runserver", "0.0.0.0:8000"]
           env:
           - name: PYTHONPATH
             value: "/app/admin_app"
