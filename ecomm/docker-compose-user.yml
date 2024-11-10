@@ -1,13 +1,13 @@
-version: '3.9'
+version: "3.9"
+
 services:
   postgres_user:
-    image: postgres
-    environment:
-      POSTGRES_DB: bikeshop
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: bikeshop
+    image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
+    command: "/cloud_sql_proxy -instances=app-integration-435314:europe-central2:page-app=tcp:5433 -credential_file=/config/credentials.json"
+    volumes:
+      - C:/Users/Pepik/Desktop:/config
     ports:
-      - "5433:5432"
+      - "5433:5433"
     networks:
       - my_network
 
@@ -16,7 +16,7 @@ services:
       context: ./ecomm
     command: python manage.py runserver 0.0.0.0:8001
     volumes:
-      - ./ecomm:/main_app
+      - ./ecomm:/app
     ports:
       - "8001:8001"
     depends_on:

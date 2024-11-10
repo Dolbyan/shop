@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'main_app.apps.EcommAppConfig',
+    'ecomm.main_app.apps.EcommAppConfig',
     'storages',
 ]
 
