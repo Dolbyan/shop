@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 WORKDIR /app
 COPY ./adminservice /app/
-RUN pip install -r adminservice/requirements.txt
+RUN pip install -r requirements.txt
 ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=adminservice.eshop.settings
 EXPOSE 8000
