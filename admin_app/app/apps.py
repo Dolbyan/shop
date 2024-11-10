@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 class AdminServiceAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'adminservice.app'
-    label = 'adminservice_app'
+    name = 'admin_app'
+    label = 'admin_app'

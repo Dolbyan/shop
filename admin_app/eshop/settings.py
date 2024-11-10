@@ -76,9 +76,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'adminservice.app.apps.AdminServiceAppConfig',
+    'admin_app.app.apps.AdminServiceAppConfig',
     'storages',
-    'adminservice',
+    'admin_app',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -193,7 +193,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'adminservice_app.User'
+AUTH_USER_MODEL = 'admin_app.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
