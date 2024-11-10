@@ -7,7 +7,7 @@ services:
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/config/credentials.json
     volumes:
-      - /path/to/credentials:/config
+      - C:\Users\Pepik\Desktop:/config
     ports:
       - "5432:5432"
     networks:
