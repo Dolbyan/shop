@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-
+DJANGO_SETTINGS_MODULE = 'ecomm.settings'
 # Application definition
 
 STRIPE_PUBLIC_KEY = 'pk_test_51PAzshDKiabUxBOTDA8MnvpvuIEFcwfPszOItpHhUMz3Xjb2BuDyJDCNDz9uWeEuvj6QDFXQ1Gzg7TA6sXylIMO400juUkc3Ov'
