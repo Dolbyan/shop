@@ -4,8 +4,10 @@ services:
   postgres_admin:
     image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
     command: "/cloud_sql_proxy -instances=app-integration-435314:europe-central2:admin-app=tcp:5434 -credential_file=/config/credentials.json"
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/config/credentials.json
     volumes:
-      - C:/Users/Pepik/Desktop:/config
+      - /path/to/credentials:/config
     ports:
       - "5434:5432"
     networks:

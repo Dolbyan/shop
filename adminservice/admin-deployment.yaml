@@ -13,15 +13,25 @@ spec:
         app: admin-app
     spec:
       containers:
-      - name: admin-app
-        image: gcr.io/app-integration-435314/admin-app-image:latest
-        ports:
-        - containerPort: 8000
-        env:
-        - name: DJANGO_SETTINGS_MODULE
-          value: "eshop.settings"
-        - name: KAFKA_BROKER_URL
-          value: "kafka:9092"
+        - name: admin-app
+          image: gcr.io/app-integration-435314/admin-app-image:latest
+          ports:
+          - containerPort: 8000
+          env:
+          - name: DJANGO_SETTINGS_MODULE
+            value: "eshop.settings"
+          - name: KAFKA_BROKER_URL
+            value: "kafka:9092"
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: "/config/credentials.json"
+          volumeMounts:
+          - name: gcp-credentials
+            mountPath: /config
+            readOnly: true
+      volumes:
+        - name: gcp-credentials
+          secret:
+            secretName: gcp-credentials
 ---
 apiVersion: v1
 kind: Service
