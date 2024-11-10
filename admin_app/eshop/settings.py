@@ -76,9 +76,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'admin_app.app.apps.AdminServiceAppConfig',
-    'storages',
     'admin_app',
+    'storages',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
