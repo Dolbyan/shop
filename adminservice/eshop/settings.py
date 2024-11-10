@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'adminservice.app.apps.AdminServiceAppConfig',
     'storages',
-    'adminservice',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -132,13 +131,22 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'page-app',
+        'NAME': 'admin-app-sql',
         'USER': 'postgres',
-        'PASSWORD': 'ke{,I4JEe+tZFM33',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
-        'PORT': '15432',
+        'PASSWORD': 'itB{V-~G>Zyq^]\R',
+        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
+        'PORT': '5432',
     }
 }
+# # }
+# 'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'admin-app',
+#         'USER': 'postgres',
+#         'PASSWORD': 'ke{,I4JEe+tZFM33',
+#         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
+#         'PORT': '15432',
+#     }
 
 
 # Password validation
@@ -175,7 +183,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
@@ -184,7 +192,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'app.User'
+AUTH_USER_MODEL = 'adminservice_app.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

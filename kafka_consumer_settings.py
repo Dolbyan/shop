@@ -35,13 +35,15 @@ INSTALLED_APPS = [
     'adminservice.app.apps.AdminServiceAppConfig',
     'ecomm.main_app.apps.EcommAppConfig',
     'storages',
+    'adminservice',
+    'ecomm',
 ]
 
 
 DATABASES = {
     'admin_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app',
+        'NAME': 'admin-app-sql',
         'USER': 'postgres',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',

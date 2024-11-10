@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'ecomm.main_app.apps.EcommAppConfig',
+    'main_app.apps.EcommAppConfig',
     'storages',
 ]
 
@@ -111,8 +111,8 @@ DATABASES = {
         'NAME': 'page-app',
         'USER': 'postgres',
         'PASSWORD': 'ke{,I4JEe+tZFM33',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
-        'PORT': '15433',
+        'HOST': '127.0.0.1',
+        'PORT': '5433',
     }
 }
 # 'default': {
@@ -167,7 +167,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main_app/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'main_app.User'
+AUTH_USER_MODEL = 'ecomm_main_app.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
