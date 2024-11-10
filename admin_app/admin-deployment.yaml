@@ -17,10 +17,10 @@ spec:
           image: gcr.io/app-integration-435314/admin-app-image:latest
           ports:
           - containerPort: 8000
-          command: ["python", "/app/admin_app/manage.py", "runserver", "0.0.0.0:8000"]
+          command: ["python", "admin_app/manage.py", "runserver", "0.0.0.0:8000"]
           env:
           - name: PYTHONPATH
-            value: "/app/admin_app"
+            value: "/admin_app"
           - name: DJANGO_SETTINGS_MODULE
             value: "admin_app.eshop.settings"
           - name: KAFKA_BROKER_URL
