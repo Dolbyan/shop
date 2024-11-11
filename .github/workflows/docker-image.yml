@@ -50,6 +50,9 @@ jobs:
       run: |
         docker build . -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+    - name: Check files in admin-app container
+      run: docker run --rm gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest ls /app/admin_app
+
 
   deploy:
     runs-on: ubuntu-latest
