@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-n7+!kp5_0edbiii%gly(y0)od=b08_$e6g$gq)i$q6wf6iba_0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 
 LOGGING = {
@@ -129,17 +129,26 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app-sql',
-        'USER': 'postgres',
-        'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'admin-app-sql'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
+        'HOST': os.getenv('DB_HOST', '/cloudsql/main_app-integration-435314:europe-central2:admin-app'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'admin-app-sql',
+#         'USER': 'postgres',
+#         'PASSWORD': 'itB{V-~G>Zyq^]\R',
+#         'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
+#         'PORT': '5432',
+#     }
+# }
 # # }
 # 'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -188,6 +197,7 @@ USE_TZ = True
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
