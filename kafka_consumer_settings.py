@@ -35,8 +35,6 @@ INSTALLED_APPS = [
     'admin_app.app.apps.AdminServiceAppConfig',
     'ecomm.main_app.apps.EcommAppConfig',
     'storages',
-    'admin_app',
-    'ecomm',
 ]
 
 
