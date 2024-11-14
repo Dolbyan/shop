@@ -40,7 +40,9 @@ jobs:
         context: .
         file: ./admin_app/Dockerfile
         push: true
-        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+        tags: |
+          gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+          gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -77,8 +79,9 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+        token_format: 'access_token'
 
-    - name: 'Set up Cloud SDK'
+    - name: Set up Cloud SDK
       uses: 'google-github-actions/setup-gcloud@v1'
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
@@ -94,8 +97,9 @@ jobs:
 
     - name: Log in to Google Container Registry
       run: |
-        gcloud auth configure-docker europe-central2-docker.pkg.dev
-        gcloud auth configure-docker gcr.io
+        echo ${{ secrets.GCP_CREDENTIALS }} > key.json
+        cat key.json | docker login -u _json_key --password-stdin gcr.io
+        rm key.json
 
     - name: Configure kubectl
       run: |
