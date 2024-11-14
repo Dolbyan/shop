@@ -60,9 +60,11 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./kafka-consumer/Dockerfile
+        file: ./Dockerfile
         push: true
-        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+        tags: |
+          gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+          gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
