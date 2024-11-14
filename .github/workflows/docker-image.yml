@@ -30,7 +30,9 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Log in to Google Container Registry
-      run: gcloud auth configure-docker
+      run: |
+        gcloud auth configure-docker europe-central2-docker.pkg.dev
+        gcloud auth configure-docker gcr.io
 
     - name: Build and push admin app
       uses: docker/build-push-action@v4
@@ -90,9 +92,14 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         install_components: 'kubectl'
 
+    - name: Log in to Google Container Registry
+      run: |
+        gcloud auth configure-docker europe-central2-docker.pkg.dev
+        gcloud auth configure-docker gcr.io
+
     - name: Configure kubectl
       run: |
-        gcloud container clusters get-credentials app-cluster --zone europe-west1-b --project ${{ secrets.GCP_PROJECT_ID }}
+        gcloud container clusters get-credentials cluster-1 --zone europe-central2-a --project ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Update deployment images
       run: |
