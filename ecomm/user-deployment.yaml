@@ -17,7 +17,10 @@ spec:
         image: gcr.io/app-integration-435314/user-app-image:latest
         ports:
         - containerPort: 8001
+        command: ["gunicorn", "--bind", "0.0.0.0:8001", "ecomm.wsgi:application"]
         env:
+        - name: PYTHONPATH
+          value: "/app/ecomm"
         - name: DJANGO_SETTINGS_MODULE
           value: "ecomm.settings"
         - name: KAFKA_BROKER_URL

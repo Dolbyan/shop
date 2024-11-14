@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin-app
+  name: admin-main-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admin-app
+      app: admin-main-app
   template:
     metadata:
       labels:
-        app: admin-app
+        app: admin-main-app
     spec:
       containers:
-        - name: admin-app
+        - name: admin-main-app
           image: gcr.io/app-integration-435314/admin-app-image:latest
           ports:
           - containerPort: 8000
-          command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+          command: ["gunicorn", "--bind", "0.0.0.0:8000", "eshop.wsgi:application"]
           env:
           - name: PYTHONPATH
-            value: "/admin_app"
+            value: "/app/admin"
           - name: DJANGO_SETTINGS_MODULE
-            value: "admin_app.eshop.settings"
+            value: "eshop.settings"
           - name: KAFKA_BROKER_URL
             value: "kafka:9092"
           - name: GOOGLE_APPLICATION_CREDENTIALS
@@ -44,5 +44,5 @@ spec:
   ports:
     - port: 8000
   selector:
-    app: admin-app
+    app: admin-main-app
   type: LoadBalancer
