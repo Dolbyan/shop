@@ -38,7 +38,7 @@ jobs:
         context: .
         file: ./admin_app/Dockerfile
         push: true
-        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:${{ github.sha }},gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -48,7 +48,7 @@ jobs:
         context: .
         file: ./ecomm/Dockerfile
         push: true
-        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:${{ github.sha }},gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
+        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -58,7 +58,7 @@ jobs:
         context: .
         file: ./kafka-consumer/Dockerfile
         push: true
-        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:${{ github.sha }},gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
+        tags: gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
@@ -76,6 +76,14 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+        install_components: 'gke-gcloud-auth-plugin'
+        export_default_credentials: true
+
     - name: Set up Google Cloud CLI
       uses: google-github-actions/setup-gcloud@v2
       with:
@@ -88,9 +96,9 @@ jobs:
 
     - name: Update deployment images
       run: |
-        kubectl set image deployment/admin-main-app admin-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:${{ github.sha }}
-        kubectl set image deployment/user-main-app user-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:${{ github.sha }}
-        kubectl set image deployment/kafka-consumer kafka-consumer=gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:${{ github.sha }}
+        kubectl set image deployment/admin-main-app admin-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
+        kubectl set image deployment/user-main-app user-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
+        kubectl set image deployment/kafka-consumer kafka-consumer=gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
 
     - name: Verify deployments
       run: |

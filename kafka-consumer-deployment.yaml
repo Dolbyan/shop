@@ -18,7 +18,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: PYTHONPATH
-          value: "/app/"
+          value: "/app/consumer"
         - name: KAFKA_BROKER_URL
           value: "kafka:9092"
         command: [ "python", "kafka_consumer.py" ]

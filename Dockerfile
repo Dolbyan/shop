@@ -7,7 +7,7 @@ COPY ./admin_app /app/consumer/admin_app
 COPY ./ecomm /app/consumer/ecomm
 COPY kafka_consumer.py kafka_consumer_settings.py ./
 
-ENV PYTHONPATH="/app/consumer:${PYTHONPATH}"
+ENV PYTHONPATH=/app/consumer
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
