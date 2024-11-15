@@ -18,7 +18,17 @@ spec:
         imagePullPolicy: Always
         env:
         - name: PYTHONPATH
-          value: "/app/consumer"
+          value: "/app:/app/admin_app:/app/ecomm"
+        - name: DJANGO_SETTINGS_MODULE
+          value: "kafka_consumer_settings"
         - name: KAFKA_BROKER_URL
           value: "kafka:9092"
+        volumeMounts:
+        - name: gcp-credentials
+          mountPath: /config
+          readOnly: true
         command: [ "python", "kafka_consumer.py" ]
+      volumes:
+        - name: gcp-credentials
+          secret:
+            secretName: gcp-credentials

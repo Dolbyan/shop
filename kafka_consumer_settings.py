@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'admin_app.app.apps.AdminServiceAppConfig',
-    'ecomm.main_app.apps.EcommAppConfig',
+    'main_app.apps.EcommAppConfig',
     'storages',
 ]
 

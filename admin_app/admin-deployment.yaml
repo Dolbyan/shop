@@ -21,23 +21,15 @@ spec:
           - /bin/sh
           - -c
           - |
-            echo "Current directory:"
-            pwd
-            echo "Directory contents:"
-            ls -la
-            echo "Python path:"
-            python -c "import sys; print(sys.path)"
             echo "Starting gunicorn..."
             gunicorn --bind 0.0.0.0:8000 eshop.wsgi:application
           env:
           - name: PYTHONPATH
-            value: "/app/admin"
+            value: "/app"
           - name: DJANGO_SETTINGS_MODULE
             value: "eshop.settings"
           - name: KAFKA_BROKER_URL
             value: "kafka:9092"
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: "/config/credentials.json"
           volumeMounts:
           - name: gcp-credentials
             mountPath: /config
