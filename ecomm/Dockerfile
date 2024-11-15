@@ -4,7 +4,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR /app/ecomm
 COPY ./ecomm .
-ENV PYTHONPATH=/app/ecomm
+COPY ./main_app .
+ENV PYTHONPATH=/app/ecomm:/app/main_app
 ENV DJANGO_SETTINGS_MODULE=ecomm.settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
