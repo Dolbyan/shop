@@ -3,8 +3,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR /app/admin
-COPY ./admin_app .
-ENV PYTHONPATH=/app/admin
+COPY . .
+ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=eshop.settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1

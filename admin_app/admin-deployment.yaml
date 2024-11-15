@@ -17,7 +17,18 @@ spec:
           image: gcr.io/app-integration-435314/admin-app-image:latest
           ports:
           - containerPort: 8000
-          command: ["gunicorn", "--bind", "0.0.0.0:8000", "eshop.wsgi:application"]
+          command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Current directory:"
+            pwd
+            echo "Directory contents:"
+            ls -la
+            echo "Python path:"
+            python -c "import sys; print(sys.path)"
+            echo "Starting gunicorn..."
+            gunicorn --bind 0.0.0.0:8000 eshop.wsgi:application
           env:
           - name: PYTHONPATH
             value: "/app/admin"
