@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-DJANGO_SETTINGS_MODULE = 'eshop.settings'
+DJANGO_SETTINGS_MODULE = 'admin_app.eshop.settings'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-n7+!kp5_0edbiii%gly(y0)od=b08_$e6g$gq)i$q6wf6iba_0'
@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'admin_app.app.apps.AdminServiceAppConfig',
     'storages',
+    'admin_app',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
