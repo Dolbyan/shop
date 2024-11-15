@@ -20,7 +20,7 @@ class User(AbstractUser):
         return user
 
     class Meta:
-        app_label = "app"
+        app_label = "admin_app.app"
 
 
 class Items(models.Model):
