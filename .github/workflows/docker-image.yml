@@ -93,6 +93,20 @@ jobs:
       run: |
         gcloud container clusters get-credentials cluster-1 --zone europe-central2-a --project ${{ secrets.GCP_PROJECT_ID }}
 
+    - name: Create GCP credentials secret in Kubernetes
+      run: |
+        echo '${{ secrets.GCP_CREDENTIALS }}' > credentials.json
+        kubectl create secret generic gcp-credentials --from-file=credentials.json -o yaml --dry-run=client | kubectl apply -f -
+        rm credentials.json
+
+    - name: Apply Kubernetes manifests
+      run: |
+        kubectl apply -f kafka-deployment.yaml
+        sleep 30
+        kubectl apply -f admin_app/admin-deployment.yaml
+        kubectl apply -f ecomm/user-deployment.yaml
+        kubectl apply -f kafka-consumer-deployment.yaml
+
     - name: Update deployment images
       run: |
         kubectl set image deployment/admin-main-app admin-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/admin-app-image:latest
@@ -104,3 +118,10 @@ jobs:
         kubectl rollout status deployment/admin-main-app
         kubectl rollout status deployment/user-main-app
         kubectl rollout status deployment/kafka-consumer
+
+    - name: Show deployment status
+      run: |
+        echo "Current deployment status:"
+        kubectl get deployments
+        echo "Current pods status:"
+        kubectl get pods
