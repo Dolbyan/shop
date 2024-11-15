@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'ecomm.main_app.apps.EcommAppConfig',
     'storages',
-    'ecomm.main_app'
 ]
 
 

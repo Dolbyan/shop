@@ -125,7 +125,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eshop.wsgi.application'
+WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 
 
 # Database
