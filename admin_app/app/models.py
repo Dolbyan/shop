@@ -19,6 +19,9 @@ class User(AbstractUser):
         user.save()
         return user
 
+    class Meta:
+        app_label = "app"
+
 
 class Items(models.Model):
     id = models.AutoField(primary_key=True)
