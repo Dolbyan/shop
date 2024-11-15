@@ -22,12 +22,12 @@ spec:
           - -c
           - |
             echo "Starting gunicorn..."
-            gunicorn --bind 0.0.0.0:8000 eshop.wsgi:application
+            gunicorn --bind 0.0.0.0:8000 admin_app.eshop.wsgi:application
           env:
           - name: PYTHONPATH
             value: "/app"
           - name: DJANGO_SETTINGS_MODULE
-            value: "eshop.settings"
+            value: "admin_app.eshop.settings"
           - name: KAFKA_BROKER_URL
             value: "kafka:9092"
           volumeMounts:
