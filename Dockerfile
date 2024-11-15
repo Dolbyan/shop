@@ -1,8 +1,6 @@
 FROM python:3.9
 
 WORKDIR /app
-
-
 COPY kafka_consumer.py /app/
 COPY kafka_consumer_settings.py /app/
 COPY requirements.txt /app/
