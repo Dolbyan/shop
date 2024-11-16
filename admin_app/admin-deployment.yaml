@@ -21,6 +21,8 @@ spec:
           - /bin/sh
           - -c
           - |
+            echo "Applying migrations"
+            python manage.py makemigrations
             echo "Starting gunicorn..."
             gunicorn --bind 0.0.0.0:8000 admin_app.eshop.wsgi:application
           env:
