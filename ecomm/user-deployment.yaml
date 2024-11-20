@@ -35,4 +35,4 @@ spec:
     - port: 8001
   selector:
     app: user-main-app
-  type: LoadBalancer
+  type: NodePort

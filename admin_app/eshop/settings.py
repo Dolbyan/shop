@@ -80,7 +80,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'admin_app.app.apps.AdminServiceAppConfig',
     'storages',
-    'admin_app.app',
     'eshop',
 ]
 
