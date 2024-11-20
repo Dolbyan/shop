@@ -1,9 +1,10 @@
 FROM python:3.9-slim
 WORKDIR /app
 COPY requirements.txt .
+COPY admin_app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY ./admin_app /app/admin_app
-COPY manage.py /app/
+COPY admin_app /app/admin_app
+COPY admin_app/manage.py /app/manage.py
 ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=admin_app.eshop.settings
 ENV PYTHONDONTWRITEBYTECODE=1
