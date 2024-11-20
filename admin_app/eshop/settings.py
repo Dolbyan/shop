@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'admin_app.app.apps.AdminServiceAppConfig',
+    'admin_app.app',
     'storages',
     'eshop',
 ]
