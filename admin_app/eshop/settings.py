@@ -205,7 +205,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'admin_app.User'
+AUTH_USER_MODEL = 'app.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
