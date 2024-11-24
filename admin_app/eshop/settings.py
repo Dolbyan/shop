@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'admin_app.app.apps.AdminServiceAppConfig',
+    'app',
     'admin_app',
     'storages',
 ]
@@ -132,10 +132,10 @@ WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'admin-app'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
-        'HOST': '10.6.224.3',
+        'NAME': 'admin-app',
+        'USER': 'admin',
+        'PASSWORD': 'itB{V-~G>Zyq^]\R',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
