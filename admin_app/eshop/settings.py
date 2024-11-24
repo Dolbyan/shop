@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-DJANGO_SETTINGS_MODULE = 'admin_app.eshop.settings'
+# DJANGO_SETTINGS_MODULE = 'admin_app.eshop.settings'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-n7+!kp5_0edbiii%gly(y0)od=b08_$e6g$gq)i$q6wf6iba_0'
@@ -78,9 +78,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'admin_app',
     'admin_app.app.apps.AdminServiceAppConfig',
     'storages',
-    'eshop',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -128,16 +128,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'admin-app-sql'),
+        'NAME': os.getenv('DB_NAME', 'admin-app'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
-        'HOST': os.getenv('DB_HOST', '/cloudsql/main_app-integration-435314:europe-central2:admin-app'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'HOST': '10.6.224.3',
+        'PORT': '5432',
     }
 }
 # DATABASES = {
@@ -195,7 +194,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

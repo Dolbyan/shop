@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from django.db.models import Sum
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed, PermissionDenied
-from .models import Items, Order, User
+from admin_app.app.models import Items, Order, User
 from django.http import JsonResponse
 from django.utils import timezone
 from datetime import timedelta
