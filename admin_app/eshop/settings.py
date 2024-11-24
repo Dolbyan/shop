@@ -134,7 +134,7 @@ DATABASES = {
         'NAME': 'admin-app',
         'USER': 'admin',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '127.0.0.1',
+        'HOST': '34.118.110.89',
         'PORT': '5432',
     }
 }

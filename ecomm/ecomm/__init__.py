@@ -1,0 +1,1 @@
+default_app_config = "ecomm.main_app.apps.EcommAppConfig"
