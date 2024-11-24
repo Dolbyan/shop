@@ -44,7 +44,7 @@ class Items(models.Model):
 
     class Meta:
         db_table = "Items"
-
+        app_label = "main_app"
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
@@ -54,8 +54,14 @@ class Order(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     payment_status = models.BooleanField(default=False)
 
+    class Meta:
+        app_label = "main_app"
+
 
 class Carts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey('Items', on_delete=models.CASCADE, related_name='cart_products')
     quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        app_label = "main_app"
