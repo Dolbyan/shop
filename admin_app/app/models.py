@@ -52,7 +52,7 @@ class Items(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    items = models.ManyToManyField("admin_app.app.Items", related_name="order_item")
+    items = models.ManyToManyField("app.Items", related_name="order_item")
     created_at = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
@@ -64,7 +64,7 @@ class Order(models.Model):
 
 class Carts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey('admin_app.app.Items', on_delete=models.CASCADE, related_name='cart_products')
+    product = models.ForeignKey('app.Items', on_delete=models.CASCADE, related_name='cart_products')
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
