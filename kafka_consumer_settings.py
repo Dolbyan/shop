@@ -41,19 +41,19 @@ INSTALLED_APPS = [
 DATABASES = {
     'admin_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app-sql',
+        'NAME': 'admin-app',
         'USER': 'postgres',
         'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:admin-app',
-        'PORT': '15432',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     },
     "ecomm_db": {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'page-app',
         'USER': 'postgres',
         'PASSWORD': 'ke{,I4JEe+tZFM33',
-        'HOST': '/cloudsql/main_app-integration-435314:europe-central2:page-app',
-        'PORT': '15433',
+        'HOST': '127.0.0.1',
+        'PORT': '5433',
     }
 }
 

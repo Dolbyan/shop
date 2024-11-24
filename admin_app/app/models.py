@@ -47,18 +47,25 @@ class Items(models.Model):
 
     class Meta:
         db_table = "Items"
+        app_label = "app"
 
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    items = models.ManyToManyField("Items", related_name="order_item")
+    items = models.ManyToManyField("admin_app.app.Items", related_name="order_item")
     created_at = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
     payment_status = models.BooleanField(default=False)
 
+    class Meta:
+        app_label = "app"
+
 
 class Carts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey('Items', on_delete=models.CASCADE, related_name='cart_products')
+    product = models.ForeignKey('admin_app.app.Items', on_delete=models.CASCADE, related_name='cart_products')
     quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        app_label = "app"

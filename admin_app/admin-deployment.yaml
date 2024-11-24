@@ -24,6 +24,15 @@ spec:
             value: "admin_app.eshop.settings"
           - name: KAFKA_BROKER_URL
             value: "kafka:9092"
+          - name: DB_NAME
+            value: "admin-app"
+          - name: DB_USER
+            value: "postgres"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-credentials
+                key: password
           volumeMounts:
           - name: gcp-credentials
             mountPath: /config
