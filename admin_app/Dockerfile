@@ -15,14 +15,16 @@ COPY admin_app/manage.py /app/manage.py
 COPY admin_app/eshop /app/eshop
 COPY admin_app/eshop/settings.py /app/eshop/settings.py
 
+COPY admin_app/start.sh /app/start.sh  # Note the additional admin_app/ prefix
+RUN chmod +x /app/start.sh
+
 ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=admin_app.eshop.settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Dodaj skrypt startowy
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+
 
 EXPOSE 8000
 
