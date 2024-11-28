@@ -13,42 +13,32 @@ spec:
         app: admin-main-app
     spec:
       containers:
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
+          command: [ "/cloud_sql_proxy",
+                     "-instances=app-integration-435314:europe-central2:admin-app=tcp:5432",
+                     "-credential_file=/secrets/gcp-credentials/credentials.json" ]
+          volumeMounts:
+            - name: gcp-credentials
+              mountPath: /secrets/gcp-credentials
+              readOnly: true
+
         - name: admin-main-app
           image: gcr.io/app-integration-435314/admin-app-image:latest
-          ports:
-          - containerPort: 8000
           env:
-          - name: PYTHONPATH
-            value: "/app"
-          - name: DJANGO_SETTINGS_MODULE
-            value: "admin_app.eshop.settings"
-          - name: KAFKA_BROKER_URL
-            value: "kafka:9092"
-          - name: DB_NAME
-            value: "admin-app"
-          - name: DB_USER
-            value: "postgres"
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-credentials
-                key: password
-          volumeMounts:
-          - name: gcp-credentials
-            mountPath: /config
-            readOnly: true
-      volumes:
-        - name: gcp-credentials
-          secret:
-            secretName: gcp-credentials
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: admin-service
-spec:
-  ports:
-    - port: 8000
-  selector:
-    app: admin-main-app
-  type: NodePort
+            - name: DB_HOST
+              value: "127.0.0.1"
+            - name: DB_NAME
+              value: "admin-app"
+            - name: DB_USER
+              value: "admin"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: password
+
+volumes:
+  - name: gcp-credentials
+    secret:
+      secretName: gcp-credentials
