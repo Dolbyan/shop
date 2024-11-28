@@ -18,6 +18,13 @@ spec:
           image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
           command: [ "/cloud_sql_proxy",
                      "-instances=app-integration-435314:europe-central2:admin-app=tcp:5432" ]
+          volumeMounts:
+            - name: gcp-credentials
+              mountPath: /secrets/
+              readOnly: true
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/gcp-credentials.json
         - name: admin-main-app
           image: gcr.io/app-integration-435314-441618/admin-app-image:latest
           env:
@@ -37,3 +44,6 @@ spec:
         - name: gcp-credentials
           secret:
             secretName: gcp-credentials
+            items:
+              - key: gcp-credentials.json
+                path: gcp-credentials.json
