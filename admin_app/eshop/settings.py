@@ -136,12 +136,6 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
         'HOST': os.getenv('DB_HOST', '34.118.110.89'),
         'PORT': os.getenv('DB_PORT', '5432'),
-        'OPTIONS': {
-            'sslmode': 'require',
-            'sslcert': '/var/secrets/google/server-ca.pem',
-            'sslkey': '/var/secrets/google/client-key.pem',
-            'sslrootcert': '/var/secrets/google/client-cert.pem',
-        }
     }
 }
 # DATABASES = {

@@ -12,39 +12,43 @@ spec:
       labels:
         app: admin-main-app
     spec:
-      serviceAccountName: workload-identity-sa
       containers:
         - name: admin-main-app
           image: gcr.io/app-integration-435314/admin-app-image:latest
           ports:
           - containerPort: 8000
           env:
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /var/secrets/google/key.json
-          - name: DB_HOST
-            value: "34.118.110.89"
-          - name: DB_PORT
-            value: "5432"
+          - name: PYTHONPATH
+            value: "/app"
+          - name: DJANGO_SETTINGS_MODULE
+            value: "admin_app.eshop.settings"
+          - name: KAFKA_BROKER_URL
+            value: "kafka:9092"
           - name: DB_NAME
             value: "admin-app"
           - name: DB_USER
-            value: "admin"
+            value: "postgres"
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: db-credentials
                 key: password
           volumeMounts:
-          - name: google-cloud-key
-            mountPath: /var/secrets/google
+          - name: gcp-credentials
+            mountPath: /config
+            readOnly: true
       volumes:
-        - name: google-cloud-key
+        - name: gcp-credentials
           secret:
             secretName: gcp-credentials
 ---
 apiVersion: v1
-kind: ServiceAccount
+kind: Service
 metadata:
-  name: workload-identity-sa
-  annotations:
-    iam.gke.io/gcp-service-account: your-service-account@app-integration-435314-441618.iam.gserviceaccount.com
+  name: admin-service
+spec:
+  ports:
+    - port: 8000
+  selector:
+    app: admin-main-app
+  type: NodePort
