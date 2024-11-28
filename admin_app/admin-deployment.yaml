@@ -8,6 +8,9 @@ spec:
     matchLabels:
       app: admin-main-app
   template:
+    metadata:
+      labels:
+        app: admin-main-app
     spec:
       containers:
         - name: cloudsql-proxy
@@ -35,7 +38,7 @@ spec:
                   name: db-credentials
                   key: password
 
-volumes:
-  - name: gcp-credentials
-    secret:
-      secretName: gcp-credentials
+      volumes:
+        - name: gcp-credentials
+          secret:
+            secretName: gcp-credentials
