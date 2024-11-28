@@ -8,9 +8,6 @@ spec:
     matchLabels:
       app: admin-main-app
   template:
-    metadata:
-      labels:
-        app: admin-main-app
     spec:
       containers:
         - name: cloudsql-proxy
