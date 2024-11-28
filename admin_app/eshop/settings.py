@@ -131,11 +131,17 @@ WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app',
-        'USER': 'admin',
-        'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '34.118.110.89',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'admin-app'),
+        'USER': os.getenv('DB_USER', 'admin'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
+        'HOST': os.getenv('DB_HOST', '34.118.110.89'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require',
+            'sslcert': '/var/secrets/google/server-ca.pem',
+            'sslkey': '/var/secrets/google/client-key.pem',
+            'sslrootcert': '/var/secrets/google/client-cert.pem',
+        }
     }
 }
 # DATABASES = {

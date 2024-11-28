@@ -68,6 +68,18 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    - name: Create SSL certificates secret
+      run: |
+        # Pobierz certyfikaty z Cloud SQL
+        gcloud sql instances describe admin-app --format='get(serverCaCert.cert)' > server-ca.pem
+        gcloud sql instances generate-client-cert admin-app --output-cert-file=client-cert.pem --output-key-file=client-key.pem
+
+        # Utwórz secret z certyfikatami
+        kubectl create secret generic sql-certs \
+          --from-file=server-ca.pem \
+          --from-file=client-cert.pem \
+          --from-file=client-key.pem \
+          --dry-run=client -o yaml | kubectl apply -f -
   deploy:
     runs-on: ubuntu-latest
     needs: build
