@@ -134,7 +134,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'admin-app'),
         'USER': os.getenv('DB_USER', 'admin'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'itB{V-~G>Zyq^]\R'),
-        'HOST': os.getenv('DB_HOST', '34.118.110.89'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }

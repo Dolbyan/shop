@@ -12,19 +12,14 @@ spec:
       labels:
         app: admin-main-app
     spec:
+      serviceAccountName: cloudsql-proxy
       containers:
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
           command: [ "/cloud_sql_proxy",
-                     "-instances=app-integration-435314:europe-central2:admin-app=tcp:5432",
-                     "-credential_file=/secrets/gcp-credentials/credentials.json" ]
-          volumeMounts:
-            - name: gcp-credentials
-              mountPath: /secrets/gcp-credentials
-              readOnly: true
-
+                     "-instances=app-integration-435314:europe-central2:admin-app=tcp:5432" ]
         - name: admin-main-app
-          image: gcr.io/app-integration-435314/admin-app-image:latest
+          image: gcr.io/app-integration-435314-441618/admin-app-image:latest
           env:
             - name: DB_HOST
               value: "127.0.0.1"
