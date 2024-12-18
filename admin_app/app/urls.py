@@ -1,4 +1,7 @@
 from django.urls import path
+from django.views.static import serve
+from django.conf import settings
+import os
 from .views import OrderListView, AdminDashboardView, OrderDetailView, AdminInventoryView, AdminGetItemView, LoginView, LogoutView
 
 urlpatterns = [
@@ -9,4 +12,9 @@ urlpatterns = [
     path("admin/dashboard", AdminDashboardView.as_view(), name="admin_dashboard"),
     path("admin/inventory", AdminInventoryView.as_view(), name="admin_inventory"),
     path("admin/get_item/<int:item_id>/", AdminGetItemView.as_view(), name="admin_get_item"),
+    path('favicon.ico', serve, {
+        'document_root': os.path.join(settings.BASE_DIR, 'app/static'),
+        'show_indexes': False,
+    }),
+
 ]
