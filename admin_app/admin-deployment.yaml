@@ -25,6 +25,12 @@ spec:
           value: "admin_app.eshop.settings"
         - name: ALLOWED_HOSTS
           value: "*"
+        volumeMounts:
+        - name: static-files
+          mountPath: /app/static
+      volumes:
+      - name: static-files
+        emptyDir: { }
 ---
 apiVersion: v1
 kind: Service

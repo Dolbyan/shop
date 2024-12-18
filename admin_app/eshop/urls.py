@@ -24,6 +24,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("admin_app.app.urls")),
-    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
-]
-
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')),
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
