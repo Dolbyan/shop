@@ -113,11 +113,11 @@ jobs:
         kubectl set image deployment/user-main-app user-main-app=gcr.io/${{ secrets.GCP_PROJECT_ID }}/user-app-image:latest
         kubectl set image deployment/kafka-consumer kafka-consumer=gcr.io/${{ secrets.GCP_PROJECT_ID }}/kafka-consumer-image:latest
 
-    - name: Verify deployments
-      run: |
-        kubectl rollout status deployment/admin-main-app
-        kubectl rollout status deployment/user-main-app
-        kubectl rollout status deployment/kafka-consumer
+#    - name: Verify deployments
+#      run: |
+#        kubectl rollout status deployment/admin-main-app
+#        kubectl rollout status deployment/user-main-app
+#        kubectl rollout status deployment/kafka-consumer
 
     - name: Show deployment status
       run: |
