@@ -23,6 +23,8 @@ spec:
           value: "/app"
         - name: DJANGO_SETTINGS_MODULE
           value: "admin_app.eshop.settings"
+        - name: ALLOWED_HOSTS
+          value: "*"
 ---
 apiVersion: v1
 kind: Service
