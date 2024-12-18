@@ -12,44 +12,14 @@ spec:
       labels:
         app: admin-main-app
     spec:
-      serviceAccountName: cloudsql-proxy
       containers:
-        - name: cloudsql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.33.1
-          command:
-            - "/cloud_sql_proxy"
-            - "-instances=app-integration-435314:europe-central2:admin-app=tcp:5432"
-            - "-credential_file=/secrets/gcp-credentials.json"
-          volumeMounts:
-            - name: gcp-credentials
-              mountPath: /secrets
-              readOnly: true
-          securityContext:
-            runAsNonRoot: true
-
-        - name: admin-main-app
-          image: gcr.io/app-integration-435314-441618/admin-app-image:latest
-          ports:
-            - containerPort: 8000
-          env:
-            - name: DB_HOST
-              value: "127.0.0.1"
-            - name: DB_NAME
-              value: "admin-app"
-            - name: DB_USER
-              value: "admin"
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-credentials
-                  key: password
-            - name: DJANGO_SETTINGS_MODULE
-              value: "admin_app.eshop.settings"
-
-      volumes:
-        - name: gcp-credentials
-          secret:
-            secretName: gcp-credentials
-            items:
-              - key: gcp-credentials.json
-                path: gcp-credentials.json
+      - name: admin-main-app
+        image: gcr.io/app-integration-435314-441618/admin-app-image:latest
+        ports:
+        - containerPort: 8000
+        command: ["gunicorn", "--workers", "4", "--threads", "2", "--bind", "0.0.0.0:8000", "admin_app.eshop.wsgi:application"]
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        - name: DJANGO_SETTINGS_MODULE
+          value: "admin_app.eshop.settings"
