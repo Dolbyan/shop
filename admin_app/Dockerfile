@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 COPY admin_app/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN python manage.py collectstatic --noinput
 # Copy application code
 COPY admin_app /app/admin_app
 COPY admin_app/manage.py /app/manage.py
