@@ -23,7 +23,7 @@ ENV DJANGO_SETTINGS_MODULE=admin_app.eshop.settings
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN python manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 # Add health check
@@ -32,3 +32,4 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 
 # Use gunicorn with multiple workers
 CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && gunicorn --workers 4 --threads 2 --bind 0.0.0.0:8000 admin_app.eshop.wsgi:application"]
+RUN python manage.py collectstatic --noinput
