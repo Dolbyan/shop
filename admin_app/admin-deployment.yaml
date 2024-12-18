@@ -23,3 +23,15 @@ spec:
           value: "/app"
         - name: DJANGO_SETTINGS_MODULE
           value: "admin_app.eshop.settings"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: admin-main-app
+  type: NodePort
