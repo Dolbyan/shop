@@ -37,9 +37,9 @@ kind: Service
 metadata:
   name: admin-service
 spec:
+  type: LoadBalancer
   ports:
-    - port: 8000
+    - port: 80
       targetPort: 8000
   selector:
     app: admin-main-app
-  type: NodePort
