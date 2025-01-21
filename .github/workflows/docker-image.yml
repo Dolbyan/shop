@@ -20,7 +20,7 @@ jobs:
       uses: medyagh/setup-minikube@master
       with:
         minikube-version: 1.34.0
-        kubernetes-version: v1.27.3  # Using a more stable version
+        kubernetes-version: v1.27.3
         driver: docker
 
     - name: Get minikube status
@@ -65,10 +65,10 @@ jobs:
 
     - name: Deploy applications
       run: |
-        # Deploy applications
+        # Deploy applications with correct paths
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
-        kubectl apply -f admin-deployment.yaml -n app-system
-        kubectl apply -f user-deployment.yaml -n app-system
+        kubectl apply -f admin_app/admin-deployment.yaml -n app-system
+        kubectl apply -f ecomm/user-deployment.yaml -n app-system
         
         # Wait for deployments to be ready
         kubectl wait --namespace app-system \
