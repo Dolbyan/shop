@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: admin-main-app
-        image: gcr.io/app-integration-435314-441618/admin-app-image:latest
+        image: admin-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 8000
-        command: ["gunicorn", "--workers", "4", "--threads", "2", "--bind", "0.0.0.0:8000", "admin_app.eshop.wsgi:application"]
         env:
         - name: PYTHONPATH
           value: "/app"
@@ -25,30 +25,12 @@ spec:
           value: "admin_app.eshop.settings"
         - name: ALLOWED_HOSTS
           value: "*"
-        - name: DB_HOST
-          value: "34.118.110.89"
-        - name: DB_PORT
-          value: "5432"
-        - name: DB_NAME
-          value: "admin-app"
-        - name: DB_USER
-          value: "postgres"
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-credentials
-              key: password
-        volumeMounts:
-        - name: static-files
-          mountPath: /app/static
-      volumes:
-      - name: static-files
-        emptyDir: { }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: admin-service
+  namespace: app-system
 spec:
   type: LoadBalancer
   ports:
