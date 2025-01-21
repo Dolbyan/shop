@@ -20,7 +20,7 @@ jobs:
       uses: medyagh/setup-minikube@master
       with:
         minikube-version: 1.34.0
-        kubernetes-version: v1.31.0
+        kubernetes-version: v1.27.3  # Using a more stable version
         driver: docker
 
     - name: Get minikube status
@@ -35,38 +35,68 @@ jobs:
         docker build -t user-app:latest -f ./ecomm/Dockerfile .
         docker build -t kafka-consumer:latest -f ./Dockerfile .
 
-    - name: Enable Ingress
+    - name: Enable and wait for Ingress
       run: |
         minikube addons enable ingress
+        
+        echo "Waiting for Ingress controller to be ready..."
+        kubectl wait --namespace ingress-nginx \
+          --for=condition=ready pod \
+          --selector=app.kubernetes.io/component=controller \
+          --timeout=300s
 
-    - name: Deploy to Minikube
+    - name: Create namespace and deploy infrastructure
       run: |
-        # Tworzenie namespace
+        # Create namespace
         kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
         
-        # Aplikowanie wszystkich manifestów Kubernetes
+        # Deploy Kafka and Zookeeper first
         kubectl apply -f kafka-deployment.yaml -n app-system
-        kubectl apply -f kafka-consumer-deployment.yaml -n app-system
-        kubectl apply -f admin_app/admin-deployment.yaml -n app-system
-        kubectl apply -f ecomm/user-deployment.yaml -n app-system
-        kubectl apply -f ingress.yaml -n app-system
+        
+        echo "Waiting for Kafka and Zookeeper to be ready..."
+        kubectl wait --namespace app-system \
+          --for=condition=ready pod \
+          --selector=app=zookeeper \
+          --timeout=180s
+        kubectl wait --namespace app-system \
+          --for=condition=ready pod \
+          --selector=app=kafka \
+          --timeout=180s
 
-    - name: Update deployments
+    - name: Deploy applications
       run: |
-        kubectl set image deployment/admin-main-app admin-main-app=admin-app:latest -n app-system
-        kubectl set image deployment/user-main-app user-main-app=user-app:latest -n app-system
-        kubectl set image deployment/kafka-consumer kafka-consumer=kafka-consumer:latest -n app-system
+        # Deploy applications
+        kubectl apply -f kafka-consumer-deployment.yaml -n app-system
+        kubectl apply -f admin-deployment.yaml -n app-system
+        kubectl apply -f user-deployment.yaml -n app-system
+        
+        # Wait for deployments to be ready
+        kubectl wait --namespace app-system \
+          --for=condition=available \
+          --all deployments \
+          --timeout=300s
+
+    - name: Deploy Ingress
+      run: |
+        # Apply Ingress configuration
+        kubectl apply -f ingress.yaml -n app-system
+        
+        echo "Waiting for Ingress to be ready..."
+        sleep 30  # Give additional time for Ingress to stabilize
 
     - name: Verify deployment
       run: |
-        echo "Sprawdzanie statusu podów:"
+        echo "Checking pod status:"
         kubectl get pods -n app-system
-        echo "Sprawdzanie statusu serwisów:"
+        echo "Checking service status:"
         kubectl get services -n app-system
-        echo "Sprawdzanie statusu ingress:"
+        echo "Checking ingress status:"
         kubectl get ingress -n app-system
+        echo "Checking ingress-nginx pods:"
+        kubectl get pods -n ingress-nginx
 
     - name: Show app URL
       run: |
         minikube service list -n app-system
         echo "Minikube IP: $(minikube ip)"
+        echo "Access your application at: http://$(minikube ip)"
