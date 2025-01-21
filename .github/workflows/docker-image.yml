@@ -9,11 +9,11 @@ on:
       - "main"
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Setup Minikube
@@ -27,7 +27,6 @@ jobs:
       run: |
         minikube status
         kubectl get nodes
-
 
     - name: Build images
       run: |
@@ -45,24 +44,29 @@ jobs:
         # Tworzenie namespace
         kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
         
-        # Aplikowanie konfiguracji
+        # Aplikowanie wszystkich manifestów Kubernetes
         kubectl apply -f kafka-deployment.yaml -n app-system
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
         kubectl apply -f admin_app/admin-deployment.yaml -n app-system
         kubectl apply -f ecomm/user-deployment.yaml -n app-system
-        
-        # Aktualizacja deploymentów
+        kubectl apply -f ingress.yaml -n app-system
+
+    - name: Update deployments
+      run: |
         kubectl set image deployment/admin-main-app admin-main-app=admin-app:latest -n app-system
         kubectl set image deployment/user-main-app user-main-app=user-app:latest -n app-system
         kubectl set image deployment/kafka-consumer kafka-consumer=kafka-consumer:latest -n app-system
 
-        - name: Verify deployment
-          run: |
-            kubectl get pods -n app-system
-            kubectl get services -n app-system
-            kubectl get ingress -n app-system
+    - name: Verify deployment
+      run: |
+        echo "Sprawdzanie statusu podów:"
+        kubectl get pods -n app-system
+        echo "Sprawdzanie statusu serwisów:"
+        kubectl get services -n app-system
+        echo "Sprawdzanie statusu ingress:"
+        kubectl get ingress -n app-system
 
-        - name: Show app URL
-          run: |
-            minikube service list -n app-system
-            echo "Minikube IP: $(minikube ip)"
+    - name: Show app URL
+      run: |
+        minikube service list -n app-system
+        echo "Minikube IP: $(minikube ip)"
