@@ -130,10 +130,10 @@ WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app',
+        'NAME': 'admin',
         'USER': 'postgres',
-        'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '34.118.110.89',
+        'PASSWORD': 'bikeshop',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
