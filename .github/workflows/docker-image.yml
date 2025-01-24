@@ -44,6 +44,10 @@ jobs:
           --selector=app.kubernetes.io/component=controller \
           --timeout=300s
 
+    - name: Create namespace
+      run: |
+        kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
+
     - name: Check namespaces
       run: |
         kubectl get namespaces
