@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \netcat \  postgresql-client
 
 # Skrypt oczekujący na bazę
-COPY wait-for-postgres.sh /app/wait-for-postgres.sh
+COPY ./wait-for-postgres.sh /app/wait-for-postgres.sh
 RUN chmod +x /app/wait-for-postgres.sh
 
 # Kopiowanie kodu i instalacja zależności Pythona
