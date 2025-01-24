@@ -130,11 +130,11 @@ WSGI_APPLICATION = 'admin_app.eshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin',
-        'USER': 'postgres',
-        'PASSWORD': 'bikeshop',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'admin'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+        'HOST': os.getenv('DB_HOST', 'postgres-admin-service'),  # Nazwa usługi Kubernetes
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 # DATABASES = {

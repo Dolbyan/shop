@@ -38,7 +38,6 @@ jobs:
     - name: Enable and wait for Ingress
       run: |
         minikube addons enable ingress
-        
         echo "Waiting for Ingress controller to be ready..."
         kubectl wait --namespace ingress-nginx \
           --for=condition=ready pod \
@@ -47,13 +46,8 @@ jobs:
 
     - name: Create namespace and deploy infrastructure
       run: |
-        # Create namespace
         kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
-        
-        # Deploy Kafka and Zookeeper first
         kubectl apply -f kafka-deployment.yaml -n app-system
-        
-        echo "Waiting for Kafka and Zookeeper to be ready..."
         kubectl wait --namespace app-system \
           --for=condition=ready pod \
           --selector=app=zookeeper \
@@ -65,12 +59,9 @@ jobs:
 
     - name: Deploy applications
       run: |
-        # Deploy applications with correct paths
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
         kubectl apply -f admin_app/admin-deployment.yaml -n app-system
         kubectl apply -f ecomm/user-deployment.yaml -n app-system
-        
-        # Wait for deployments to be ready
         kubectl wait --namespace app-system \
           --for=condition=available \
           --all deployments \

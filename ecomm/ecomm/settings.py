@@ -106,13 +106,13 @@ WSGI_APPLICATION = 'ecomm.ecomm.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'page-app',
-        'USER': 'postgres',
-        'PASSWORD': 'ke{,I4JEe+tZFM33',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'NAME': os.getenv('DB_NAME', 'bikeshop'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+        'HOST': os.getenv('DB_HOST', 'postgres-user-service'),  # Nazwa usługi Kubernetes
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 # 'default': {

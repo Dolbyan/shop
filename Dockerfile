@@ -1,18 +1,17 @@
-FROM python:3.9
-
+FROM python:3.9-slim
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y postgresql-client && apt-get clean
+# Instalacja zależności i narzędzi
+RUN apt-get update && apt-get install -y netcat postgresql-client
 
-COPY kafka_consumer.py /app/
-COPY kafka_consumer_settings.py /app/
-COPY requirements.txt /app/
+# Skrypt oczekujący na bazę
+COPY wait-for-postgres.sh /app/wait-for-postgres.sh
+RUN chmod +x /app/wait-for-postgres.sh
 
-COPY admin_app /app/admin_app/
-COPY ecomm /app/ecomm/
-
+# Kopiowanie kodu i instalacja zależności
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-ENV PYTHONPATH=/app:/app/admin_app:/app/ecomm
-
-CMD ["python", "kafka_consumer.py"]
+# Komenda startowa
+CMD ["sh", "-c", "./wait-for-postgres.sh postgres-service:5432 -- gunicorn --bind 0.0.0.0:8001 ecomm.ecomm.wsgi:application"]
