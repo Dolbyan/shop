@@ -133,7 +133,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'admin'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
-        'HOST': os.getenv('DB_HOST', 'postgres-admin-service'),  # Nazwa usługi Kubernetes
+        'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }

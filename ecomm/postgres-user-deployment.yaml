@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-user
+  namespace: app-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-user
+  template:
+    metadata:
+      labels:
+        app: postgres-user
+    spec:
+      containers:
+      - name: postgres-user
+        image: postgres:13
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: bikeshop
+        - name: POSTGRES_DB
+          value: bikeshop
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-user-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-user-storage
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-user-service
+  namespace: app-system
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres-user
