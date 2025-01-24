@@ -43,6 +43,11 @@ jobs:
           --for=condition=ready pod \
           --selector=app.kubernetes.io/component=controller \
           --timeout=300s
+
+    - name: Check namespaces
+      run: |
+        kubectl get namespaces
+
     - name: Deploy PostgreSQL databases
       run: |
         kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
