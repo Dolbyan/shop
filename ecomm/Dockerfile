@@ -2,14 +2,16 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Instalacja zależności
-RUN apt-get update && apt-get install -y \netcat \  postgresql-client
+RUN apt-get update && apt-get install -y \
+    netcat \
+    postgresql-client
 
 # Skrypt oczekujący na bazę
 COPY ./wait-for-postgres.sh /app/wait-for-postgres.sh
 RUN chmod +x /app/wait-for-postgres.sh
 
 # Kopiowanie kodu i instalacja zależności Pythona
-COPY requirements.txt .
+COPY ecomm/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
