@@ -111,7 +111,7 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'bikeshop'),
         'USER': os.getenv('DB_USER', 'postgres'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'HOST': os.getenv('DB_HOST', 'postgres-user-service'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
