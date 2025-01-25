@@ -20,7 +20,10 @@ spec:
         - name: POSTGRES_USER
           value: postgres
         - name: POSTGRES_PASSWORD
-          value: bikeshop
+          valueFrom:
+            secretKeyRef:
+              name: postgres-admin-secret
+              key: POSTGRES_PASSWORD
         - name: POSTGRES_DB
           value: admin
         ports:
