@@ -41,8 +41,9 @@ jobs:
 
     - name: Deploy PostgreSQL
       run: |
-        # Upewnij się, że masz plik postgres-deployment.yaml
-        kubectl apply -f postgres-deployment.yaml -n app-system
+        
+        kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
+        kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
         kubectl wait --for=condition=ready pod -l app=postgres-admin -n app-system
 
     - name: Deploy Kafka and Zookeeper
