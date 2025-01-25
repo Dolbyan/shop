@@ -68,10 +68,7 @@ jobs:
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
         kubectl apply -f admin_app/admin-deployment.yaml -n app-system
         kubectl apply -f ecomm/user-deployment.yaml -n app-system
-        kubectl wait --namespace app-system \
-          --for=condition=available \
-          --all deployments \
-          --timeout=300s
+        
 
     - name: Deploy Ingress
       run: |
