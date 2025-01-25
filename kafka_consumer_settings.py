@@ -41,19 +41,19 @@ INSTALLED_APPS = [
 DATABASES = {
     'admin_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'admin-app',
-        'USER': 'postgres',
-        'PASSWORD': 'itB{V-~G>Zyq^]\R',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'admin'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     },
     "ecomm_db": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'page-app',
-        'USER': 'postgres',
-        'PASSWORD': 'ke{,I4JEe+tZFM33',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'NAME': os.getenv('DB_NAME', 'bikeshop'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 

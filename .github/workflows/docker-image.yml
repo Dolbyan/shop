@@ -44,27 +44,6 @@ jobs:
           --selector=app.kubernetes.io/component=controller \
           --timeout=300s
 
-    - name: Create namespace
-      run: |
-        kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
-
-    - name: Check namespaces
-      run: |
-        kubectl get namespaces
-
-    - name: Deploy PostgreSQL databases
-      run: |
-        kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
-        kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
-        kubectl wait --namespace app-system \
-          --for=condition=ready pod \
-          --selector=app=postgres-admin \
-          --timeout=180s
-        kubectl wait --namespace app-system \
-          --for=condition=ready pod \
-          --selector=app=postgres-user \
-          --timeout=180s
-
     - name: Create namespace and deploy infrastructure
       run: |
         kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
@@ -77,6 +56,12 @@ jobs:
           --for=condition=ready pod \
           --selector=app=kafka \
           --timeout=180s
+
+    - name: Forward PostgreSQL port
+      run: |
+        kubectl port-forward service/postgres-admin-service 5432:5432 -n app-system &
+        kubectl port-forward service/postgres-user-service 5433:5432 -n app-system &
+      shell: bash
 
     - name: Deploy applications
       run: |
