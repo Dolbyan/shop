@@ -39,12 +39,24 @@ jobs:
       run: |
         kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
 
-    - name: Deploy PostgreSQL
+    - name: Configure Database Secrets
       run: |
-        
+        kubectl create secret generic postgres-secrets \
+          --from-literal=ADMIN_DB=admin \
+          --from-literal=ADMIN_USER=postgres \
+          --from-literal=ADMIN_PASSWORD=bikeshop \
+          --from-literal=USER_DB=bikeshop \
+          --from-literal=USER_PASSWORD=bikeshop \
+          -n app-system
+
+    - name: Deploy PostgreSQL
+      run: |-
+        kubectl apply -f postgres-pvc.yaml -n app-system
         kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
         kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
-        kubectl wait --for=condition=ready pod -l app=postgres-admin -n app-system
+        # Wait with timeout
+        kubectl wait --for=condition=ready pod -l app=postgres-admin -n app-system --timeout=300s
+        kubectl wait --for=condition=ready pod -l app=postgres-user -n app-system --timeout=300s
 
     - name: Deploy Kafka and Zookeeper
       run: |
@@ -52,58 +64,9 @@ jobs:
         kubectl wait --for=condition=ready pod -l app=kafka -n app-system
         kubectl wait --for=condition=ready pod -l app=zookeeper -n app-system
 
-    - name: Configure Database Secrets
-      run: |
-        kubectl create secret generic postgres-admin-secret \
-          --from-literal=POSTGRES_DB=admin_db \
-          --from-literal=POSTGRES_USER=admin \
-          --from-literal=POSTGRES_PASSWORD=admin_password \
-          -n app-system
 
     - name: Deploy Admin App
       run: |
-        # Zaktualizuj deployment o zmienne środowiskowe
-        cat > admin_app/admin-deployment.yaml << EOF
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: admin-main-app
-          namespace: app-system
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              app: admin-main-app
-          template:
-            metadata:
-              labels:
-                app: admin-main-app
-            spec:
-              containers:
-              - name: admin-main-app
-                image: admin-app:latest
-                env:
-                - name: DATABASE_HOST
-                  value: postgres-admin-service.app-system.svc.cluster.local
-                - name: DATABASE_PORT
-                  value: "5432"
-                - name: POSTGRES_DB
-                  valueFrom:
-                    secretKeyRef:
-                      name: postgres-admin-secret
-                      key: POSTGRES_DB
-                - name: POSTGRES_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: postgres-admin-secret
-                      key: POSTGRES_USER
-                - name: POSTGRES_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: postgres-admin-secret
-                      key: POSTGRES_PASSWORD
-        EOF
-        
         kubectl apply -f admin_app/admin-deployment.yaml
 
     - name: Deploy Other Services

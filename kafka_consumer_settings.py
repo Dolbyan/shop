@@ -37,25 +37,44 @@ INSTALLED_APPS = [
     'storages',
 ]
 
-
 DATABASES = {
     'admin_db': {
+        'NAME': os.getenv('ADMIN_DB_NAME', 'admin'),
+        'USER': os.getenv('ADMIN_DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('ADMIN_DB_PASSWORD', 'bikeshop'),
+        'HOST': 'postgres-admin-service.app-system.svc.cluster.local',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'admin'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'PORT': '5432',
     },
     "ecomm_db": {
+        'NAME': os.getenv('USER_DB_NAME', 'bikeshop'),
+        'USER': 'postgres',
+        'PASSWORD': os.getenv('USER_DB_PASSWORD', 'bikeshop'),
+        'HOST': 'postgres-user-service.app-system.svc.cluster.local',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'bikeshop'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'PORT': '5432',
+
     }
 }
+
+# DATABASES = {
+#     'admin_db': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME', 'admin'),
+#         'USER': os.getenv('DB_USER', 'postgres'),
+#         'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+#         'HOST': 'postgres-admin-service.app-system.svc.cluster.local',
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     },
+#     "ecomm_db": {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('DB_NAME', 'bikeshop'),
+#         'USER': os.getenv('DB_USER', 'postgres'),
+#         'PASSWORD': os.getenv('DB_PASSWORD', 'bikeshop'),
+#         'HOST': 'postgres-user-service.app-system.svc.cluster.local',
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
 
 # "ecomm_db": {
 #         'ENGINE': 'django.db.backends.postgresql',

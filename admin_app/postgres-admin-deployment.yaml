@@ -17,23 +17,30 @@ spec:
       - name: postgres-admin
         image: postgres:13
         env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: ADMIN_DB_NAME
         - name: POSTGRES_USER
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: ADMIN_DB_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-admin-secret
-              key: POSTGRES_PASSWORD
-        - name: POSTGRES_DB
-          value: admin
+              name: postgres-secrets
+              key: ADMIN_DB_PASSWORD
         ports:
         - containerPort: 5432
         volumeMounts:
         - name: postgres-admin-storage
           mountPath: /var/lib/postgresql/data
       volumes:
-      - name: postgres-admin-storage
-        emptyDir: {}
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
 ---
 apiVersion: v1
 kind: Service

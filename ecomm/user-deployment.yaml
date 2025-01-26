@@ -27,11 +27,17 @@ spec:
         - name: DB_HOST
           value: "postgres-user-service"
         - name: DB_NAME
-          value: "bikeshop"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: USER_DB
         - name: DB_USER
           value: "postgres"
         - name: DB_PASSWORD
-          value: "bikeshop"
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: USER_DB_PASSWORD
         - name: DB_PORT
           value: "5432"
 ---
