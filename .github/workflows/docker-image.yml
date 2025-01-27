@@ -1,80 +1,45 @@
-name: Docker Image CI/CD
+name: Local Minikube Deployment
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - "main"
+    branches: [ "main" ]
+
+env:
+  KUBECONFIG: ${{ secrets.KUBECONFIG }}
+  MINIKUBE_IP: ${{ secrets.MINIKUBE_IP }}
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup Minikube
-      uses: medyagh/setup-minikube@master
-      with:
-        minikube-version: 1.34.0
-        kubernetes-version: v1.27.3
-        driver: docker
-
-    - name: Configure Kubernetes Context
+    - name: Setup Minikube Context
       run: |
-        kubectl config set-context minikube
+        minikube status
         kubectl config use-context minikube
 
-    - name: Build images
+    - name: Build Docker Images
       run: |
-        eval $(minikube docker-env)
         docker build -t admin-app:latest -f ./admin_app/Dockerfile .
         docker build -t user-app:latest -f ./ecomm/Dockerfile .
         docker build -t kafka-consumer:latest -f ./Dockerfile .
 
-    - name: Create namespace
+    - name: Deploy to Minikube
       run: |
-        kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
-
-    - name: Configure Database Secrets
-      run: |
-        kubectl create secret generic postgres-secrets \
-          --from-literal=ADMIN_DB=admin \
-          --from-literal=ADMIN_USER=postgres \
-          --from-literal=ADMIN_PASSWORD=bikeshop \
-          --from-literal=USER_DB=bikeshop \
-          --from-literal=USER_PASSWORD=bikeshop \
-          -n app-system
-
-    - name: Deploy PostgreSQL
-      run: |-
         kubectl apply -f postgres-pvc.yaml -n app-system
         kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
         kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
-        # Wait with timeout
-        kubectl wait --for=condition=ready pod -l app=postgres-admin -n app-system --timeout=300s
-        kubectl wait --for=condition=ready pod -l app=postgres-user -n app-system --timeout=300s
-
-    - name: Deploy Kafka and Zookeeper
-      run: |
         kubectl apply -f kafka-deployment.yaml -n app-system
-        kubectl wait --for=condition=ready pod -l app=kafka -n app-system
-        kubectl wait --for=condition=ready pod -l app=zookeeper -n app-system
-
-
-    - name: Deploy Admin App
-      run: |
-        kubectl apply -f admin_app/admin-deployment.yaml
-
-    - name: Deploy Other Services
-      run: |
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
+        kubectl apply -f admin_app/admin-deployment.yaml -n app-system
         kubectl apply -f ecomm/user-deployment.yaml -n app-system
 
     - name: Verify Deployment
       run: |
-        kubectl get pods -n app-system
-        kubectl get services -n app-system
+        kubectl get pods -n app-system -w
+        kubectl get svc -n app-system

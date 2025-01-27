@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Komenda startowa
-CMD ["sh", "-c", "./wait-for-postgres.sh postgres-service:5432 -- gunicorn --bind 0.0.0.0:8001 ecomm.ecomm.wsgi:application"]
+CMD ["sh", "-c", "./wait-for-postgres.sh postgres-admin-service:5432 -- python kafka_consumer.py"]
