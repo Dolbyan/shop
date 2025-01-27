@@ -18,6 +18,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Setup Minikube Context
+      run: |
+        kubectl config use-context minikube
+
     - name: Verify Minikube Status
       run: |
         minikube status
