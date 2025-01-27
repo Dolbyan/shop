@@ -6,9 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  KUBECONFIG: ${{ secrets.KUBECONFIG }}
-  MINIKUBE_IP: ${{ secrets.MINIKUBE_IP }}
+
 
 jobs:
   deploy:
