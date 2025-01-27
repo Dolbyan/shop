@@ -37,11 +37,11 @@ jobs:
         kubectl apply -f postgres-pvc.yaml -n app-system
         kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
         kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
-        kubectl apply -f kafka-deployment.yaml -n app-system
-        kubectl apply -f kafka-consumer-deployment.yaml -n app-system
-        kubectl apply -f admin_app/admin-deployment.yaml -n app-system
-        kubectl apply -f ecomm/user-deployment.yaml -n app-system
-        kubectl apply -f ingress.yaml -n app-system
+        kubectl apply -f ./kafka-deployment.yaml -n app-system
+        kubectl apply -f ./kafka-consumer-deployment.yaml -n app-system
+        kubectl apply -f ./admin_app/admin-deployment.yaml -n app-system
+        kubectl apply -f ./ecomm/user-deployment.yaml -n app-system
+        kubectl apply -f ./ingress.yaml -n app-system
 
     - name: Verify Deployment
       run: |
