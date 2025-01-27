@@ -16,7 +16,7 @@ spec:
       containers:
       - name: postgres-admin
         image: postgres:13
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
         - name: POSTGRES_DB
           valueFrom:

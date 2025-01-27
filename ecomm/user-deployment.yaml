@@ -16,7 +16,7 @@ spec:
       containers:
       - name: user-main-app
         image: user-app:latest
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
         - containerPort: 8001
         env:
