@@ -16,7 +16,7 @@ spec:
       containers:
       - name: postgres-user
         image: postgres:13
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: POSTGRES_DB
           valueFrom:

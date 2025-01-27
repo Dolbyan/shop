@@ -16,7 +16,7 @@ spec:
       containers:
       - name: admin-main-app
         image: admin-app:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
         env:
