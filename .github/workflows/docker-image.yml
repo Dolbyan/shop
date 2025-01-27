@@ -7,21 +7,58 @@ on:
     branches: [ "main" ]
 
 env:
-  KUBECONFIG: ${{ secrets.KUBECONFIG }}
-  MINIKUBE_IP: ${{ secrets.MINIKUBE_IP }}
+  REGISTRY: ghcr.io
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   deploy:
     runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Setup Minikube Context
+    - name: Start Minikube
       run: |
+        minikube start --driver=docker
         minikube status
-        kubectl config use-context minikube
+
+    - name: Setup Kubernetes Context
+      shell: pwsh
+      run: |
+        # Create .kube directory if it doesn't exist
+        New-Item -Path "$HOME\.kube" -ItemType Directory -Force
+
+        # Save the decoded kubeconfig content
+        $kubeconfig = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($env:KUBECONFIG))
+        $kubeconfig | Out-File -FilePath "$HOME\.kube\config" -Encoding UTF8 -Force
+
+        # Replace the server address with MINIKUBE_IP if needed
+        (Get-Content "$HOME\.kube\config") -replace 'https://.*:8443', "https://$env:MINIKUBE_IP`:8443" | Set-Content "$HOME\.kube\config"
+        
+        # Set proper permissions
+        icacls "$HOME\.kube\config" /inheritance:r
+        icacls "$HOME\.kube\config" /grant:r "$env:USERNAME`:(R,W)"
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        MINIKUBE_IP: ${{ secrets.MINIKUBE_IP }}
+
+    - name: Verify Kubernetes Configuration
+      run: |
+        kubectl config view
+        kubectl cluster-info
+        kubectl get nodes
+
+    - name: Create Namespace if not exists
+      run: |
+        kubectl create namespace app-system --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: Configure Docker for Minikube
+      run: |
+        minikube docker-env | Invoke-Expression
 
     - name: Build Docker Images
       run: |
@@ -29,17 +66,45 @@ jobs:
         docker build -t user-app:latest -f ./ecomm/Dockerfile .
         docker build -t kafka-consumer:latest -f ./Dockerfile .
 
-    - name: Deploy to Minikube
+    - name: Create/Update ConfigMaps and Secrets
+      run: |
+        kubectl create secret generic postgres-secrets `
+          --from-literal=ADMIN_DB_NAME=admin `
+          --from-literal=ADMIN_DB_USER=postgres `
+          --from-literal=ADMIN_DB_PASSWORD=bikeshop `
+          --from-literal=USER_DB_NAME=bikeshop `
+          --from-literal=USER_DB_PASSWORD=bikeshop `
+          -n app-system `
+          --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: Deploy Infrastructure Components
       run: |
         kubectl apply -f postgres-pvc.yaml -n app-system
         kubectl apply -f ./admin_app/postgres-admin-deployment.yaml -n app-system
         kubectl apply -f ./ecomm/postgres-user-deployment.yaml -n app-system
         kubectl apply -f kafka-deployment.yaml -n app-system
+
+    - name: Deploy Application Components
+      run: |
         kubectl apply -f kafka-consumer-deployment.yaml -n app-system
         kubectl apply -f admin_app/admin-deployment.yaml -n app-system
         kubectl apply -f ecomm/user-deployment.yaml -n app-system
+        kubectl apply -f ingress.yaml -n app-system
 
-    - name: Verify Deployment
+    - name: Verify Deployments
       run: |
-        kubectl get pods -n app-system -w
+        kubectl get pods -n app-system -w --timeout=300s
         kubectl get svc -n app-system
+
+    - name: Check Application Logs
+      run: |
+        kubectl logs -n app-system -l app=admin-main-app --tail=100
+        kubectl logs -n app-system -l app=user-main-app --tail=100
+        kubectl logs -n app-system -l app=kafka-consumer --tail=100
+
+    - name: Cleanup
+      if: failure()
+      run: |
+        kubectl get pods -n app-system
+        kubectl describe pods -n app-system
+        kubectl get events -n app-system
