@@ -15,7 +15,7 @@ spec:
       containers:
       - name: kafka-consumer
         image: kafka-consumer:latest
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
         - name: PYTHONPATH
           value: "/app:/app/admin_app:/app/ecomm"
