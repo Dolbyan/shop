@@ -18,6 +18,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Setup Kubernetes Context
+      run: |
+        New-Item -Path $HOME\.kube -ItemType Directory -Force
+        [IO.File]::WriteAllBytes("$HOME\.kube\config", [Convert]::FromBase64String($Env:KUBECONFIG_BASE64))
+        kubectl config view
+        kubectl cluster-info
+      env:
+        KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG }}
+
     - name: Setup Minikube Context
       run: |
         minikube status
