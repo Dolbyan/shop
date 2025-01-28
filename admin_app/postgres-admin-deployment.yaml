@@ -27,7 +27,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: postgres-secrets
-              key: ADMIN_DB_USER
+              key: ADMIN_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
