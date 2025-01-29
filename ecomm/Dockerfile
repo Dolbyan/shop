@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Komenda startowa
-CMD ["sh", "-c", "./wait-for-postgres.sh postgres-user-service:5432 -- gunicorn --bind 0.0.0.0:8001 ecomm.ecomm.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8001", "ecomm.ecomm.wsgi:application"]

@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY admin_app /app/admin_app
 
 # Komenda startowa
-CMD ["sh", "-c", "./wait-for-postgres.sh postgres-admin-service:5432 -- python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 admin_app.eshop.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "admin_app.eshop.wsgi:application"]
