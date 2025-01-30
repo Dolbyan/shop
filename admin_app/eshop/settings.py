@@ -80,6 +80,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'admin_app.app.apps.AdminServiceAppConfig',
     'storages',
+    'eshop',
+
 ]
 
 CORS_ALLOW_CREDENTIALS = True

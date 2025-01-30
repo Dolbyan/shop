@@ -9,14 +9,14 @@ spec:
   rules:
   - http:
       paths:
-      - path: /admin
+      - path: /api/admin
         pathType: Prefix
         backend:
           service:
             name: admin-service
             port:
               number: 80
-      - path: /user
+      - path: /api/
         pathType: Prefix
         backend:
           service:
