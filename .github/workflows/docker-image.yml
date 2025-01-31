@@ -17,13 +17,13 @@ jobs:
 
     - name: Start Minikube with Custom Config
       run: |
-        minikube start \
-          --driver=docker \
-          --kubernetes-version=v1.30.0 \ 
-          --dns-proxy=false \
-          --no-vtx-check \
-          --profile=minikube \
-          --force \
+        minikube start `
+          --driver=docker `
+          --kubernetes-version=v1.30.0 `
+          --dns-proxy=false `
+          --no-vtx-check `
+          --profile=minikube `
+          --force `
           --embed-certs
 
     - name: Setup Minikube Context
