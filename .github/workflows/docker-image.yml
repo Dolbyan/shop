@@ -15,14 +15,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Start Minikube with Custom Config
+      run: |
+        minikube start --driver=docker --kubernetes-version=v1.28.3 --dns-proxy=false --no-vtx-check --profile=minikube
+
     - name: Setup Minikube Context
       run: |
+        minikube update-context
         kubectl config use-context minikube
 
     - name: Verify Minikube Status
       run: |
         minikube status
-        minikube update-context
 
     - name: Build Docker Images
       run: |
