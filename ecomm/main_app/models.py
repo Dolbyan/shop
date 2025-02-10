@@ -4,6 +4,9 @@ from .utilities import S3Client
 
 
 class User(AbstractUser):
+    class Meta:
+        app_label = "main_app"
+
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255, unique=True)

@@ -23,7 +23,7 @@ spec:
         - name: PYTHONPATH
           value: "/app"
         - name: DJANGO_SETTINGS_MODULE
-          value: "ecomm.ecomm.settings"
+          value: "ecomm.settings"
         - name: DB_HOST
           value: "postgres-user-service"
         - name: DB_NAME
@@ -47,9 +47,10 @@ metadata:
   name: user-service
   namespace: app-system
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 8001
       targetPort: 8001
+      nodePort: 30003
   selector:
     app: user-main-app

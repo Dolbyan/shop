@@ -1,19 +1,11 @@
 FROM python:3.9-slim
 WORKDIR /app
 
-# Instalacja zależności
-RUN apt-get update && apt-get install -y \
-    netcat-traditional \
-    postgresql-client
+RUN apt-get update && apt-get install -y postgresql-client
 
-# Skrypt oczekujący na bazę
-COPY ./wait-for-postgres.sh /app/wait-for-postgres.sh
-RUN chmod +x /app/wait-for-postgres.sh
+COPY ecomm/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Kopiowanie kodu i instalacja zależności Pythona
-COPY ecomm/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+COPY ecomm/ /app/
 
-# Komenda startowa
-CMD ["gunicorn", "--bind", "0.0.0.0:8001", "ecomm.ecomm.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8001", "ecomm.wsgi:application"]

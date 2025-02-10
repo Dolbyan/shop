@@ -28,8 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-DJANGO_SETTINGS_MODULE = 'ecomm.ecomm.settings'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecomm.settings')
 # Application definition
+AUTH_USER_MODEL = 'main_app.User'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51PAzshDKiabUxBOTDA8MnvpvuIEFcwfPszOItpHhUMz3Xjb2BuDyJDCNDz9uWeEuvj6QDFXQ1Gzg7TA6sXylIMO400juUkc3Ov'
 STRIPE_SECRET_KEY = 'sk_test_51PAzshDKiabUxBOTExbY3tjWi4Mf56qjIRiw5fjMdJmVrScAPRvVp8YwhuCh2KXS6qeyJCkFNpqMLCesklFVIPPW00H9YYYOcN'
@@ -58,7 +59,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'ecomm.main_app.apps.EcommAppConfig',
+    'main_app.apps.EcommAppConfig',
     'storages',
 ]
 
@@ -99,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecomm.ecomm.wsgi.application'
+WSGI_APPLICATION = 'ecomm.wsgi.application'
 
 
 # Database
@@ -158,16 +159,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'main_app/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'main_app.User'
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
